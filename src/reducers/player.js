@@ -4,13 +4,25 @@ const initialState = {
 	health: 100,
 	xp: 100,
 	weapon: {
-		name: 'Taser',
-		damage: 10
+		name: 'Butter Knife',
+		damage: 1,
+		cost: 1
+	},
+	tool: {
+		name: 'flint',
+		damage: 0,
+		cost: 1
 	}
 };
 
 export default (state = initialState, { type, payload }) => {
 	switch (type) {
+		case t.REMOVE_TOOL:
+			return { ...state, tool: payload };
+		case t.ADD_TOOL:
+			return { ...state, tool: payload };
+		case t.REMOVE_WEAPON:
+			return { ...state, weapon: payload };
 		case t.ADD_WEAPON:
 			return { ...state, weapon: payload };
 		case t.ADD_XP:

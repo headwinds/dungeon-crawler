@@ -9,6 +9,9 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebPackPlugin = require('html-webpack-plugin');
 const NpmInstallPlugin = require('npm-install-webpack-plugin');
 
+console.log('__dirname: ', __dirname);
+
+
 const TARGET = process.env.npm_lifecycle_event;
 const PATHS = {
   src: path.join(__dirname, 'src'),

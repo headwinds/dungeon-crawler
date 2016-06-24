@@ -7,8 +7,8 @@ export default ({level}) => {
 				<span
 					className={`title title-${level}`}
 					>
-				THE GRID
-				</span> - Roguelike
+				GIANTS
+				</span> - Ballad of Wun Wun & Sansa
 			</h1>
 		</div>
 	);

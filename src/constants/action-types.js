@@ -1,3 +1,6 @@
+export const ADD_TOOL = 'ADD_TOOL';
+export const REMOVE_TOOL = 'REMOVE_TOOL';
+export const REMOVE_WEAPON = 'REMOVE_WEAPON';
 export const ADD_WEAPON = 'ADD_WEAPON';
 export const ADD_XP = 'ADD_XP';
 export const CHANGE_ENTITY = 'CHANGE_ENTITY';
