@@ -105,6 +105,7 @@ export default (gameMap, level = 1) => {
 	});
 
 	// 3. we can now replace doors with floors
+	// what do doors look like? do they need keys? do they hide what's behind them?!
 	for (let i = 0; i < gameMap.length; i++) {
 		for (let j = 0; j < gameMap[0].length; j++) {
 			if (gameMap[i][j].type === 'door') {
