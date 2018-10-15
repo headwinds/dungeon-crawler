@@ -154,10 +154,13 @@ export function updateDungeon(payload) {
 	};
 }
 
-export function setDungeonLevel(payload) {
+export function setDungeonLevel(level, transit) {
 	return {
 		type: t.SET_DUNGEON_LEVEL,
-		payload
+		payload: {
+			level,
+			transit
+		}
 	};
 }
 
@@ -287,13 +290,14 @@ export default (vector) => {
 
 				if (grid.dungeon.exitsComplete === grid.dungeon.exits) {
 					setTimeout(() => dispatch(batchActions([
-						setDungeonLevel(grid.dungeonLevel + 1),
+						setDungeonLevel(grid.dungeonLevel + 1, grid.dungeonLevel + 1),
 						createLevel(grid.dungeonLevel + 1)
 					])), 3000);
 					actions.push(
 						newMessage(`The cells start to shift... you transit to zone ${grid.dungeonLevel + 1}`)
 					);
-					setTimeout(() => dispatch(setDungeonLevel(`transit-${grid.dungeonLevel + 1}`)), 250);
+					//do I need this? the transit part causes a bug in the HUD
+					setTimeout(() => dispatch(setDungeonLevel(grid.dungeonLevel + 1, `transit-${grid.dungeonLevel + 1}`)), 250);
 				} else {
 					const oldDungeon = grid.dungeon;
 					const newDungeonState = {...oldDungeon, exitsComplete: oldDungeon.exitsComplete + 1}

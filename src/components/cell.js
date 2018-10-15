@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default ({ cell, distance, visible, zone }) => {
+export default ({ cell, distance, visible, zone, transit }) => {
 	let opacityValue = cell.opacity;
 	if (visible && distance > 10) {
 		opacityValue = 0;
@@ -10,7 +10,7 @@ export default ({ cell, distance, visible, zone }) => {
 
 	return (
 		<div
-			className={cell.type ? `${cell.type} cell` : `back-${zone} cell`}
+			className={cell.type ? `${cell.type} cell` : `back-${transit} cell`}
 			style={{opacity: opacityValue}}
 			/>
 	);

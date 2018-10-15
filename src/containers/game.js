@@ -26,7 +26,7 @@ class Grid extends Component {
 		this.VP_MINIMUM_HEIGHT = 22; // in ems
 
 		// set ratios for determining the viewport size
-		// type can either be full or contained which is the original 31,21 ratios while full raitos are both 1 or fullscreen 
+		// type can either be full or contained which is the original 31,21 ratios while full raitos are both 1 or fullscreen
 		this.VP_WIDTH_RATIO = (config.VP_TYPE === "full") ? config.VP_WIDTH_RATIO_FULL : config.VP_WIDTH_RATIO_CONTAINED;
 		this.VP_HEIGHT_RATIO = (config.VP_TYPE === "full") ? config.VP_HEIGHT_RATIO_FULL : config.VP_HEIGHT_RATIO_CONTAINED;
 	}
@@ -42,7 +42,7 @@ class Grid extends Component {
 
 		this.setState({ viewportWidth, viewportHeight });
 		this.props.createLevel();
-		this.props.setDungeonLevel(1);
+		this.props.setDungeonLevel(1,1);
 	}
 
 	componentDidMount() {
@@ -130,6 +130,7 @@ class Grid extends Component {
 									cell={cell}
 									distance={cell.distanceFromPlayer}
 									zone={this.props.grid.dungeonLevel}
+									transit={this.props.grid.dungeonTransit}
 									visible={this.props.fogMode}
 									/>
 							);
@@ -155,7 +156,7 @@ const mapDispatchToProps = (dispatch) => {
 	return {
 		playerInput: (vector) => dispatch(playerInput(vector)),
 		createLevel: () => dispatch(createLevel()),
-		setDungeonLevel: (level) => dispatch(setDungeonLevel(level)),
+		setDungeonLevel: (level,transit) => dispatch(setDungeonLevel(level,transit)),
 		triggerOpeningMessages: () => dispatch(openingMessages())
 	};
 };
