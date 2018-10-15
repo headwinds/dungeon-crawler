@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import config from '../config.js';
 
 export default class extends Component {
 	constructor() {
@@ -40,7 +41,7 @@ export default class extends Component {
 	}
 	render() {
 		return (
-			<div className="strip">
+			<div className="tips">
 				<p> Tip: {this.state.tips[this.state.displayIdx]}</p>
 			</div>
 		);

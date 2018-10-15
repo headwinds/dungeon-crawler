@@ -1,12 +1,35 @@
 import _ from 'lodash';
 import { batchActions } from 'redux-batched-actions';
+import { addCurrency, removeCurrency } from './currency';
 import createMap from '../bin/game-map-creator';
 import populateEntities from '../bin/entity-creator';
 import * as t from '../constants/action-types';
 
+
+function addShield(payload) {
+	return {
+		type: t.ADD_SHIELD,
+		payload
+	};
+}
+
+function removeShield(payload) {
+	return {
+		type: t.REMOVE_SHIELD,
+		payload
+	};
+}
+
 function addWeapon(payload) {
 	return {
 		type: t.ADD_WEAPON,
+		payload
+	};
+}
+
+function removeWeapon(payload) {
+	return {
+		type: t.REMOVE_WEAPON,
 		payload
 	};
 }
@@ -66,7 +89,7 @@ export function lookAround(entities) {
 	let iconClass = '';
 
 	entities.map(row => {
-		const closeBy = row.filter( entity => entity.distanceFromPlayer === 1);
+		const closeBy = row.filter( entity => entity.distanceFromPlayer <= 2);
 		if (closeBy.length > 0) entitiesBesidePlay.push(closeBy)
 	});
 
@@ -87,7 +110,10 @@ export function lookAround(entities) {
 					let about = '';
 					switch(entity.type) {
 						case "weapon" :
-							about = " " + entity.name + " " + entity.damage
+							about = " " + entity.name + " +" + entity.damage
+							break;
+						case "shield" :
+							about = " " + entity.name + " +" + entity.protection
 							break;
 						case "boss" :
 						case "enemy" :
@@ -121,10 +147,30 @@ export function lookAround(entities) {
 	};
 }
 
+export function updateDungeon(payload) {
+	return {
+		type: t.UPDATE_DUNGEON,
+		payload
+	};
+}
+
 export function setDungeonLevel(payload) {
 	return {
 		type: t.SET_DUNGEON_LEVEL,
 		payload
+	};
+}
+
+export function setEndGame(payload) {
+	return {
+		type: t.SET_END_GAME,
+		payload
+	};
+}
+
+export function resetDungeon() {
+	return {
+		type: t.RESET_DUNGEON
 	};
 }
 
@@ -166,7 +212,7 @@ export default (vector) => {
 
 				if (destination.health > 0) {
 					// enemy attacks player
-					const playerDamageTaken = Math.floor(_.random(4, 7) * destination.level);
+					const playerDamageTaken = Math.floor(_.random(4, 7) * destination.level) - player.shield.protection;
 
 					actions.push(
 						changeEntity(destination, newPosition),
@@ -177,7 +223,7 @@ export default (vector) => {
 					if (player.health - playerDamageTaken <= 0) {
 						// player dies
 						dispatch(modifyHealth(0));
-						setTimeout(() => dispatch(setDungeonLevel('death')), 250);
+						setTimeout(() => dispatch(setEndGame('death')), 250);
 						setTimeout(() => dispatch(newMessage(`YOU DIED`)),
 						1000);
 						setTimeout(() => dispatch(newMessage(`Everything goes dark..`)),
@@ -187,7 +233,7 @@ export default (vector) => {
 						setTimeout(() => dispatch(newMessage(`The grid resets itself....`)),
 						6000);
 						setTimeout(() => dispatch(batchActions([
-							restart(), createLevel(1), setDungeonLevel(1)
+							restart(), createLevel(1), resetDungeon()
 						])),
 						8000);
 						return;
@@ -199,13 +245,14 @@ export default (vector) => {
 					// add XP and move the player
 					if (destination.type === 'boss') {
 						actions.push(
-							addXP(10),
+							addXP(10 * destination.level),
+							addCurrency(player, destination),
 							changeEntity({ type: 'floor'}, [x, y]),
 							changeEntity(newPlayer, newPosition),
 							changePlayerPosition(newPosition),
 							newMessage(`VICTORY! Your attack of [${enemyDamageTaken}] is too powerful for the enemy, who dissolves before your very eyes.`)
 						);
-						setTimeout(() => dispatch(setDungeonLevel('victory')), 250);
+						setTimeout(() => dispatch(setEndGame('victory')), 250);
 						setTimeout(() => dispatch(newMessage(`YOU DEFATED THE BOSS!`)),
 						1000);
 						setTimeout(() => dispatch(newMessage(`The BOSS emits an almighty scream`)),
@@ -215,12 +262,13 @@ export default (vector) => {
 						setTimeout(() => dispatch(newMessage(`The grid resets itself....`)),
 						6000);
 						setTimeout(() => dispatch(batchActions([
-							restart(), createLevel(1), setDungeonLevel(1)
+							restart(), createLevel(1), resetDungeon()
 						])),
 						8000);
 					} else {
 						actions.push(
-							addXP(10),
+							addXP(10 * destination.level),
+							addCurrency(player, destination),
 							changeEntity({ type: 'floor'}, [x, y]),
 							changeEntity(newPlayer, newPosition),
 							changePlayerPosition(newPosition),
@@ -236,14 +284,30 @@ export default (vector) => {
 				break;
 			}
 			case 'exit':
-				setTimeout(() => dispatch(batchActions([
-					setDungeonLevel(grid.dungeonLevel + 1),
-					createLevel(grid.dungeonLevel + 1)
-				])), 3000);
-				actions.push(
-					newMessage(`The cells start to shift... you transit to zone ${grid.dungeonLevel + 1}`)
-				);
-				setTimeout(() => dispatch(setDungeonLevel(`transit-${grid.dungeonLevel + 1}`)), 250);
+
+				if (grid.dungeon.exitsComplete === grid.dungeon.exits) {
+					setTimeout(() => dispatch(batchActions([
+						setDungeonLevel(grid.dungeonLevel + 1),
+						createLevel(grid.dungeonLevel + 1)
+					])), 3000);
+					actions.push(
+						newMessage(`The cells start to shift... you transit to zone ${grid.dungeonLevel + 1}`)
+					);
+					setTimeout(() => dispatch(setDungeonLevel(`transit-${grid.dungeonLevel + 1}`)), 250);
+				} else {
+					const oldDungeon = grid.dungeon;
+					const newDungeonState = {...oldDungeon, exitsComplete: oldDungeon.exitsComplete + 1}
+
+					actions.push(
+						newMessage(`You enter the tunnel and pass into the next zone`)
+					);
+
+					setTimeout(() => dispatch(batchActions([
+						updateDungeon(newDungeonState),
+						createLevel(grid.dungeonLevel)
+					])), 250);
+				}
+
 				break;
 			case 'potion':
 				actions.push(
@@ -257,6 +321,11 @@ export default (vector) => {
 					newMessage(`You pick up a ${destination.name}`)
 				);
 				break;
+			case 'shield':
+				actions.push(
+					addShield(destination),
+					newMessage(`You pick up a ${destination.name}`)
+				);
 			default:
 				break;
 		}
@@ -280,7 +349,7 @@ export function restartGame() {
 	return (dispatch) => {
 		dispatch(newMessage(`The grid resets itself....`));
 		setTimeout(() => dispatch(batchActions([
-			restart(), createLevel(1), setDungeonLevel(1)
+			restart(), createLevel(1), resetDungeon()
 		])),
 		1000);
 	};

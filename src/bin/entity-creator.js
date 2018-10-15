@@ -38,60 +38,106 @@ export default (gameMap, level = 1) => {
 
 	const potions = [];
 	for (let i = 0; i < 5; i++) {
-		potions.push({ type: 'potion' });
+		potions.push({ type: 'potion', modifies: 'health', by: 5 });
 	}
+
+	const shieldTypes = [
+		{
+			name: 'Hat',
+			protection: 1
+		},
+		{
+			name: 'Bracers',
+			protection: 5
+		},
+		{
+			name: 'Rusty Shield',
+			protection: 10
+		},
+		{
+			name: 'Wooden Shield',
+			protection: 12
+		},
+		{
+			name: 'Leather Shield',
+			protection: 20
+		},
+		{
+			name: 'Chain Shield',
+			protection: 25
+		},
+		{
+			name: 'Plate Shield',
+			protection: 40
+		},
+		{
+			name: 'Elven Shield',
+			protection: 50
+		}
+	];
 
 	const weaponTypes = [
 		{
-			name: 'Laser Pistol',
+			name: 'Big Stick',
+			damage: 10
+		},
+		{
+			name: 'Club',
 			damage: 15
 		},
 		{
-			name: 'Laser Rifle',
-			damage: 19
+			name: 'Rusty Sword',
+			damage: 20
 		},
 		{
-			name: 'Plasma Pistol',
-			damage: 26
+			name: 'Butcher Knife',
+			damage: 25
 		},
 		{
-			name: 'Plasma Rifle',
-			damage: 28
+			name: 'Mace',
+			damage: 30
 		},
 		{
-			name: 'Electric ChainSaw',
-			damage: 31
+			name: 'Flail',
+			damage: 35
 		},
 		{
-			name: 'Railgun',
-			damage: 33
-		},
-		{
-			name: 'Dark Energy Cannon',
+			name: 'Long Sword',
 			damage: 40
 		},
 		{
-			name: 'B.F.G',
-			damage: 43
+			name: 'Broad Sword',
+			damage: 50
 		}
 	];
 
 	const weapons = [];
 	// weapon types will vary based on the level passed to the parent function
-	const qualifying = weaponTypes
+	const qualifyingWeapons = weaponTypes
 		.filter(weapon => weapon.damage < level * 10 + 10)
 			.filter(weapon => weapon.damage > level * 10 - 10);
 	for (let i = 0; i < 3; i++) {
-		const weapon = Object.assign({}, qualifying[_.random(0, qualifying.length - 1)]);
+		const weapon = Object.assign({}, qualifyingWeapons[_.random(0, qualifyingWeapons.length - 1)]);
 		weapon.type = 'weapon';
 		weapons.push(weapon);
+	}
+
+	const shields = [];
+	// shields act like weapons except add protection instead of damage
+	const qualifyingShields = shieldTypes
+		.filter(shield => shield.protection < level * 10 + 10)
+			.filter(shield => shield.protection > level * 10 - 10);
+	for (let i = 0; i < 3; i++) {
+		const shield = Object.assign({}, qualifyingShields[_.random(0, qualifyingShields.length - 1)]);
+		shield.type = 'shield';
+		shields.push(shield);
 	}
 
 	// 2. randomly place all the entities on to floor cells on the game map.
 
 	// we'll need to return the players starting co-ordinates
 	let playerPosition = [];
-	[potions, enemies, weapons, exits, players, bosses].forEach(entities => {
+	[potions, enemies, weapons, shields, exits, players, bosses].forEach(entities => {
 		while (entities.length) {
 			const x = Math.floor(Math.random() * c.GRID_WIDTH);
 			const y = Math.floor(Math.random() * c.GRID_HEIGHT);
@@ -109,7 +155,7 @@ export default (gameMap, level = 1) => {
 	for (let i = 0; i < gameMap.length; i++) {
 		for (let j = 0; j < gameMap[0].length; j++) {
 			if (gameMap[i][j].type === 'door') {
-				gameMap[i][j].type = 'floor';
+			 	gameMap[i][j].type = 'floor';
 			}
 		}
 	}

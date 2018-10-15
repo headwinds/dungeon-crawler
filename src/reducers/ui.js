@@ -1,9 +1,10 @@
 import * as t from '../constants/action-types';
+import config from '../config.js';
 
 const messages = [];
 
 const initialState = {
-	fogMode: true,
+	fogMode: config.FOG_MODE,
 	messages
 };
 

@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import config from '../config.js';
 
 import playerInput, {
 	createLevel,
@@ -23,18 +24,22 @@ class Grid extends Component {
 
 		this.VP_HEIGHT_OFFSET = 5; // in ems to match elements above this component
 		this.VP_MINIMUM_HEIGHT = 22; // in ems
+
 		// set ratios for determining the viewport size
-		this.VP_WIDTH_RATIO = 30;
-		this.VP_HEIGHT_RATIO = 21;
+		// type can either be full or contained which is the original 31,21 ratios while full raitos are both 1 or fullscreen 
+		this.VP_WIDTH_RATIO = (config.VP_TYPE === "full") ? config.VP_WIDTH_RATIO_FULL : config.VP_WIDTH_RATIO_CONTAINED;
+		this.VP_HEIGHT_RATIO = (config.VP_TYPE === "full") ? config.VP_HEIGHT_RATIO_FULL : config.VP_HEIGHT_RATIO_CONTAINED;
 	}
 
 	componentWillMount() {
 		// set the initial veiwport size
 		const viewportWidth = window.innerWidth / this.VP_WIDTH_RATIO;
+
 		const viewportHeight = Math.max(
 			this.VP_MINIMUM_HEIGHT,
 			(window.innerHeight / this.VP_HEIGHT_RATIO) - this.VP_HEIGHT_OFFSET
 		);
+
 		this.setState({ viewportWidth, viewportHeight });
 		this.props.createLevel();
 		this.props.setDungeonLevel(1);
