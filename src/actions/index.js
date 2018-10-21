@@ -5,7 +5,6 @@ import createMap from '../bin/game-map-creator';
 import populateEntities from '../bin/entity-creator';
 import * as t from '../constants/action-types';
 
-
 function addShield(payload) {
 	return {
 		type: t.ADD_SHIELD,
@@ -82,71 +81,6 @@ export function restart() {
 	};
 }
 
-export function lookAround(entities) {
-
-	const entitiesBesidePlay = [];
-	let aroundMe = '';
-	let iconClass = '';
-
-	entities.map(row => {
-		const closeBy = row.filter( entity => entity.distanceFromPlayer <= 2);
-		if (closeBy.length > 0) entitiesBesidePlay.push(closeBy)
-	});
-
-	if (entitiesBesidePlay.length > 0) {
-
-		const enemy = {
-			1:"Rat",
-			2:"Kobold",
-			3:"Dark Elf",
-			4:"Troll",
-			5:"Boss"
-		}
-
-		entitiesBesidePlay.map(entities => {
-			entities.map( entity => {
-				const type = (entity.type === 0) ? "wall" : entity.type;
-				if (type !== "floor" && type !== "wall") {
-					let about = '';
-					switch(entity.type) {
-						case "weapon" :
-							about = " " + entity.name + " +" + entity.damage
-							break;
-						case "shield" :
-							about = " " + entity.name + " +" + entity.protection
-							break;
-						case "boss" :
-						case "enemy" :
-								about = " " + enemy[entity.level] + " lvl " + entity.level + " health " + entity.health;
-								break;
-						case "exit" :
-							about = " Stairs leading down ";
-							break;
-						case "potion" :
-								about = " Health Potion ";
-								break;
-					}
-					aroundMe += about;
-					iconClass = entity.type;
-				}
-			})
-		})
-	}
-
-	if (aroundMe === '') {
-		aroundMe = "not much to see here";
-		iconClass = 'floor';
-	}
-
-	const action = "Look";
-
-	const payload = {action, aroundMe, iconClass};
-	return {
-		type: t.LOOK_AROUND,
-		payload
-	};
-}
-
 export function updateDungeon(payload) {
 	return {
 		type: t.UPDATE_DUNGEON,
@@ -197,13 +131,26 @@ export default (vector) => {
 		// store the actions in array to be past to batchActions
 		const actions = [];
 
-		// move the player unless destination is an enemy or a '0' cell
-		if (destination.type && destination.type !== 'enemy' && destination.type !== 'boss') {
-			actions.push(
-				changeEntity({ type: 'floor' }, [x, y]),
-				changeEntity(newPlayer, newPosition),
-				changePlayerPosition(newPosition)
-			);
+		// move the player unless destination is an enemy or permanent fixture like a wall (cell 0) or building
+		if (destination.type
+				&& destination.type !== 'enemy'
+					&& destination.type !== 'boss') {
+
+			// players should be able to pass through npcs but we don't want to remove them from the game
+
+			if (destination.type === 'npc') {
+				actions.push(
+					changeEntity({ ...destination }, [x, y]),
+					changeEntity(newPlayer, newPosition),
+					changePlayerPosition(newPosition)
+				);
+			}	else {
+				actions.push(
+					changeEntity({ type: 'floor' }, [x, y]),
+					changeEntity(newPlayer, newPosition),
+					changePlayerPosition(newPosition)
+				);
+			}
 		}
 		switch (destination.type) {
 			case 'boss':
@@ -314,10 +261,14 @@ export default (vector) => {
 
 				break;
 			case 'potion':
-				actions.push(
-					modifyHealth(player.health + 30),
-					newMessage(`You drink a potion for [30] health`)
-				);
+
+				 if (destination.modifies === "health") {
+					 actions.push(
+	 					modifyHealth(player.health + destination.by),
+	 					newMessage(`You drink a potion for [${destination.modifies}] health`)
+	 				);
+				 }
+
 				break;
 			case 'weapon':
 				actions.push(

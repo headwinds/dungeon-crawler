@@ -1,12 +1,12 @@
 import update from 'react-addons-update';
 import * as t from '../constants/action-types';
-import dungeons from '../config/dungeons';
+import dungeonTypes from '../types/dungeonTypes';
 
 const initialState = {
 	entities: [[]],
 	dungeonLevel: 0,
 	dungeonTransit: 0, // when changing zones, this moves from a number like 2 to a string like 'transit-2' affecting the Cell
-	dungeon: {...dungeons[0]},
+	dungeon: {...dungeonTypes[0]},
 	playerPosition: [],
 	endGame: "unknown",
 };
@@ -35,9 +35,9 @@ export default (state = initialState, { type, payload }) => {
 		case t.UPDATE_DUNGEON:
 				return { ...state, dungeon: payload };
 		case t.SET_DUNGEON_LEVEL:
-			return { ...state, dungeonLevel: payload.level, dungeon: dungeons[payload.level - 1], dungeonTransit: payload.transit };
+			return { ...state, dungeonLevel: payload.level, dungeon: dungeonTypes[payload.level - 1], dungeonTransit: payload.transit };
 		case t.RESET_DUNGEON:
-				return { ...state, dungeonLevel: 0, dungeon: dungeons[0] };
+				return { ...state, dungeonLevel: 0, dungeon: dungeonTypes[0] };
 		default:
 			return state;
 	}

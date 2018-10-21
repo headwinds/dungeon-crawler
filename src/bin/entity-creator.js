@@ -1,5 +1,10 @@
 import _ from 'lodash';
 import * as c from '../constants/settings';
+import weaponTypes from '../types/weaponTypes';
+import shieldTypes from '../types/shieldTypes';
+import enemyTypes from '../types/enemyTypes';
+import potionTypes from '../types/potionTypes';
+import npcTypes from '../types/npcTypes';
 
 export default (gameMap, level = 1) => {
 	// 1. create the entities
@@ -12,6 +17,12 @@ export default (gameMap, level = 1) => {
 		});
 	}
 
+	const npcTrader = npcTypes.filter( npc => npc.profession.toLowerCase() === "trader")[0];
+	const npcs = [];
+	for (let i = 0; i < 4; i++) {
+		npcs.push({...npcTrader}); // if you don't use spread, it will create an immutable tile and the distance calc will fail
+	}
+
 	const enemies = [];
 	for (let i = 0; i < 7; i++) {
 		enemies.push({
@@ -19,7 +30,8 @@ export default (gameMap, level = 1) => {
 			// half of the enememies will be a level higher or lower (except on
 			// level 1, where ~1/4 enemies are a level higher)
 			level: _.random(level, _.random(level - 1 ? level - 1 : level, level + 1)),
-			type: 'enemy'
+			type: 'enemy',
+			name: enemyTypes[level]
 		});
 	}
 
@@ -36,80 +48,11 @@ export default (gameMap, level = 1) => {
 		}
 	];
 
+	const healthPotion = potionTypes.filter( potion => potion.modifies === "health")[0];
 	const potions = [];
 	for (let i = 0; i < 5; i++) {
-		potions.push({ type: 'potion', modifies: 'health', by: 5 });
+		potions.push({...healthPotion});
 	}
-
-	const shieldTypes = [
-		{
-			name: 'Hat',
-			protection: 1
-		},
-		{
-			name: 'Bracers',
-			protection: 5
-		},
-		{
-			name: 'Rusty Shield',
-			protection: 10
-		},
-		{
-			name: 'Wooden Shield',
-			protection: 12
-		},
-		{
-			name: 'Leather Shield',
-			protection: 20
-		},
-		{
-			name: 'Chain Shield',
-			protection: 25
-		},
-		{
-			name: 'Plate Shield',
-			protection: 40
-		},
-		{
-			name: 'Elven Shield',
-			protection: 50
-		}
-	];
-
-	const weaponTypes = [
-		{
-			name: 'Big Stick',
-			damage: 10
-		},
-		{
-			name: 'Club',
-			damage: 15
-		},
-		{
-			name: 'Rusty Sword',
-			damage: 20
-		},
-		{
-			name: 'Butcher Knife',
-			damage: 25
-		},
-		{
-			name: 'Mace',
-			damage: 30
-		},
-		{
-			name: 'Flail',
-			damage: 35
-		},
-		{
-			name: 'Long Sword',
-			damage: 40
-		},
-		{
-			name: 'Broad Sword',
-			damage: 50
-		}
-	];
 
 	const weapons = [];
 	// weapon types will vary based on the level passed to the parent function
@@ -137,7 +80,14 @@ export default (gameMap, level = 1) => {
 
 	// we'll need to return the players starting co-ordinates
 	let playerPosition = [];
-	[potions, enemies, weapons, shields, exits, players, bosses].forEach(entities => {
+	[	potions,
+		enemies,
+		weapons,
+		shields,
+		exits,
+		players,
+		npcs,
+		bosses].forEach(entities => {
 		while (entities.length) {
 			const x = Math.floor(Math.random() * c.GRID_WIDTH);
 			const y = Math.floor(Math.random() * c.GRID_HEIGHT);
@@ -152,6 +102,8 @@ export default (gameMap, level = 1) => {
 
 	// 3. we can now replace doors with floors
 	// what do doors look like? do they need keys? do they hide what's behind them?!
+	// So they don't hide the contents behind them and they act like potions meaning they disappear when crossed.
+	// we should implement doors that hide the things inside when closed and some doors should be locked requiring the right key
 	for (let i = 0; i < gameMap.length; i++) {
 		for (let j = 0; j < gameMap[0].length; j++) {
 			if (gameMap[i][j].type === 'door') {

@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { toggleFogMode, restartGame, lookAround } from '../actions';
+import { toggleFogMode, restartGame } from '../actions';
+import { lookAround } from '../actions/examine';
+import { getNPCsAroundMe } from '../utils/npc-utils';
 
 class PlayerSettings extends Component {
 	constructor() {
@@ -40,7 +42,7 @@ class PlayerSettings extends Component {
 		);
 	}
 	handleKeyPress(e) {
-
+		//console.log("code:",e.keyCode)
 		switch (e.keyCode) {
 			// north
 			case 70:
@@ -51,6 +53,10 @@ class PlayerSettings extends Component {
 				break;
 			case 76:
 					this.props.lookAround(this.props.grid.entities);
+					break;
+			case 84:
+					const npcsAroundMe = getNPCsAroundMe(this.props.grid.entities)
+					this.props.talkToNPC(npcsAroundMe);
 					break;
 			default:
 				return;

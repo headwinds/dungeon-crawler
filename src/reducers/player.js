@@ -22,7 +22,8 @@ const initialState = {
 		title: "",
 		action: "Look",
 		aroundMe: "press l to look around",
-	}
+	},
+	npcsAroundMe: [],
 };
 
 export default (state = initialState, { type, payload }) => {

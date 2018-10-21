@@ -15,6 +15,7 @@ $potion: #ff0000
 $player: #fc8d8d
 $exit: #00b9f1
 $boss: #c447e0
+$npc: #eac086
 
 $gold: #cfb53b
 $silver: #CCC
@@ -164,6 +165,9 @@ h1
 .boss
   +entity($boss)
 
+.npc
+  +entity($npc)
+
 .gold
   +entity($gold)
 
@@ -197,6 +201,10 @@ h1
   position: fixed
   top: 40px
   right: 40px
+
+.npcStore
+  display: flex
+  flex-direction: column   
 
 .grid-wrapper
   border: 1px solid rgba(0,0,0,0.2)

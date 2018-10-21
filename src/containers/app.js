@@ -5,6 +5,7 @@ import config from '../config.js';
 import Game from '../containers/game';
 import Header from '../components/header';
 import Messages from '../containers/messages';
+//import NPCStore from '../containers/npc-store';
 import PlayerSettings from '../containers/player-settings';
 import Scoreboard from '../components/scoreboard';
 import Tips from '../containers/tips';
@@ -22,12 +23,15 @@ const App = ({grid, player}) => {
 		if (config.TIPS_ALONG_BOTTOM) return (<Tips/>)
 		else return null;
 	}
-	
+
 	return (
 		<div>
 			<Header level={grid.dungeonLevel}/>
 			<div id={app}>
 				<Game/>
+				<div className="npcStore">
+					{/* <NPCStore /> */}
+				</div>
 				<div className={sidebarClass}>
 					<Scoreboard player={player} grid={grid}/>
 					<PlayerSettings/>
@@ -40,8 +44,8 @@ const App = ({grid, player}) => {
 	);
 };
 
-const mapStateToProps = ({ grid, player }) => {
-	return { grid, player };
+const mapStateToProps = ({ ui, grid, player }) => {
+	return { ui, grid, player };
 };
 
 export default connect(mapStateToProps)(App);

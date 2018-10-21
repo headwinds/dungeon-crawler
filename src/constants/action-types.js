@@ -28,3 +28,6 @@ export const RESET_DUNGEON = 'RESET_DUNGEON';
 export const SET_END_GAME = 'SET_END_GAME';
 export const UPDATE_DUNGEON = 'UPDATE_DUNGEON';
 export const SET_DUNGEON_LEVEL = 'SET_DUNGEON_LEVEL';
+
+// NPC
+export const TOGGLE_NPC_STORE = 'TOGGLE_NPC_STORE';

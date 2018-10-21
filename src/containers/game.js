@@ -111,7 +111,14 @@ class Grid extends Component {
 		// create a new array of entities which includes the distance from the player
 		// used to enable fog mode
 		const newEntities = entities.map((row, i) => row.map((cell, j) => {
-			cell.distanceFromPlayer = (Math.abs(playerY - i)) + (Math.abs(playerX - j));
+			const distanceFromPlayer = (Math.abs(playerY - i)) + (Math.abs(playerX - j));
+			cell.distanceFromPlayer = distanceFromPlayer;
+			if (cell.type === "potion") {
+				console.log("---- POTION ----");
+				console.log("cell: ", cell);
+				console.log("cell distanceFromPlayer: ", distanceFromPlayer);
+				//console.log("player: ", this.props.grid.playerPosition);
+			}
 			return cell;
 		}));
 

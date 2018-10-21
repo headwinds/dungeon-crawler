@@ -19,7 +19,7 @@ const peted = {
   GAME_URL: "https://thepeted.github.io/dungeon-crawler"
 }
 
-const currentConfig = headwinds;
+const currentConfig = peted;
 
 const config = {
   VP_WIDTH_RATIO_CONTAINED : 30,
