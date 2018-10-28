@@ -5,7 +5,7 @@ import config from '../config.js';
 import Game from '../containers/game';
 import Header from '../components/header';
 import Messages from '../containers/messages';
-//import NPCStore from '../containers/npc-store';
+import NPCStore from '../containers/npc-store/npc-store';
 import PlayerSettings from '../containers/player-settings';
 import Scoreboard from '../components/scoreboard';
 import Tips from '../containers/tips';
@@ -30,7 +30,7 @@ const App = ({grid, player}) => {
 			<div id={app}>
 				<Game/>
 				<div className="npcStore">
-					{/* <NPCStore /> */}
+					<NPCStore />
 				</div>
 				<div className={sidebarClass}>
 					<Scoreboard player={player} grid={grid}/>

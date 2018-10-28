@@ -113,12 +113,6 @@ class Grid extends Component {
 		const newEntities = entities.map((row, i) => row.map((cell, j) => {
 			const distanceFromPlayer = (Math.abs(playerY - i)) + (Math.abs(playerX - j));
 			cell.distanceFromPlayer = distanceFromPlayer;
-			if (cell.type === "potion") {
-				console.log("---- POTION ----");
-				console.log("cell: ", cell);
-				console.log("cell distanceFromPlayer: ", distanceFromPlayer);
-				//console.log("player: ", this.props.grid.playerPosition);
-			}
 			return cell;
 		}));
 

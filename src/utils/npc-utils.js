@@ -20,9 +20,14 @@ export function getNPCsAroundMe(entities) {
 	console.log("beside me:" , entitiesBesideMe)
 
 	if (entitiesBesideMe.length > 0) {
+		const npcsAroundMe = [];
 		entitiesBesideMe.map(entities => {
-			return entities.filter(entity => entity.type === "npc");
+			const group = entities.filter(entity => entity.type === "npc");
+			if (group && group.length > 0) {
+				group.map( npc => npcsAroundMe.push(npc) )
+			}
 		});
+		return npcsAroundMe;
 	} else {
 		return null; // no one is beside me
 	}

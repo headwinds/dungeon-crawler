@@ -6,7 +6,7 @@ const headwinds = {
   FOG_MODE: false,
   GAME_TITLE: "Cabin Quest",
   GAME_SUBTITLE: " explore time between city and country",
-  GAME_URL: ""
+  GAME_URL: "https://cabinquest.now.sh"
 }
 
 const peted = {

@@ -31,3 +31,7 @@ export const SET_DUNGEON_LEVEL = 'SET_DUNGEON_LEVEL';
 
 // NPC
 export const TOGGLE_NPC_STORE = 'TOGGLE_NPC_STORE';
+export const TALK_TO_NPC = 'TALK_TO_NPC';
+export const SELECT_NPC = 'SELECT_NPC';
+export const BUY_ITEM = 'TOGGLE_NPC_STORE';
+export const SELL_ITEM = 'TOGGLE_NPC_STORE';

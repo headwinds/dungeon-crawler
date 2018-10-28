@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 
 import { toggleFogMode, restartGame } from '../actions';
 import { lookAround } from '../actions/examine';
+import { talkToNPC } from '../actions/npc';
 import { getNPCsAroundMe } from '../utils/npc-utils';
 
 class PlayerSettings extends Component {
@@ -56,7 +57,7 @@ class PlayerSettings extends Component {
 					break;
 			case 84:
 					const npcsAroundMe = getNPCsAroundMe(this.props.grid.entities)
-					this.props.talkToNPC(npcsAroundMe);
+					if ( npcsAroundMe.length > 0) this.props.talkToNPC(npcsAroundMe);
 					break;
 			default:
 				return;
@@ -73,6 +74,7 @@ const mapDispatchToProps = (dispatch) => {
 		toggleFogMode: () => dispatch(toggleFogMode()),
 		restartGame: () => dispatch(restartGame()),
 		lookAround: (entities) => dispatch(lookAround(entities)),
+		talkToNPC: (npcsAroundMe) => dispatch(talkToNPC(npcsAroundMe))
 	};
 };
 

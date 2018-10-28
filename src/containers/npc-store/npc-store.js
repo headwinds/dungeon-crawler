@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { buyItem, sellItem, tradeItem } from '../actions/npc';
+import { buyItem, sellItem, tradeItem } from '../../actions/npc';
+import Store from './store';
 
 const defaultItems = [
 	{name: "sword", cost: 30, currency: "copper"}
 ]
+
+const rowStle = {display: "flex", flexDireciton: "row", justifyContent: "space-between"};
 
 class NPCStore extends Component {
 	constructor() {
@@ -14,6 +17,8 @@ class NPCStore extends Component {
 			conversation: "conversational text here...",
 			items: defaultItems,
 			selectedItem: defaultItems[0],
+			npcs: [],
+			selectedNPC: null
 		}
 
 		this.handleKeyPress = this.handleKeyPress.bind(this);
@@ -23,8 +28,22 @@ class NPCStore extends Component {
 		window.addEventListener('keydown', this.handleKeyPress);
 	}
 
+	componentDidUpdate(nextProps) {
+		window.addEventListener('keydown', this.handleKeyPress);
+
+		console.log("npc-store componentDidUpdate", nextProps);
+
+		if (nextProps.player.npcsAroundMe > 0) {
+
+		}
+	}
+
 	componentWillUnmount() {
 		window.removeEventListener('keydown', this.handleKeyPress);
+	}
+
+	componentDidReceiveProps(nextProps){
+		console.log("npc-store componentDidReceiveProps", nextProps)
 	}
 
 	handleItemClick(e){
@@ -46,38 +65,50 @@ class NPCStore extends Component {
 		*/
 	}
 
+	handleSelectNPC(selectedNPC){
+
+		this.setState({selectedNPC})
+	}
+
 	render() {
 		const { npc, player } = this.props;
 
-		const getItemsForSale = () => {
-			return this.state.items.map( item => {
-				return (<div onClick={this.handleItemClick}>
-									<div>{item.name}</div>
-									<div>{item.cost} {item.currency}</div>
-							 </div>)
-			})
+		// if there are multiple npcs around, first you need to pick one to interact with...
+		const getPickNPC = () => {
+			if (player.npcsAroundMe.length > 0 && this.state.selectedNPC === null) {
+				return player.npcsAroundMe.map( (npc, idx) => {
+
+					return (
+						<div key={idx}
+								 style={{margin: 20}}
+								 onClick={() => this.handleSelectNPC(npc)}>
+							{npc.name}
+						</div>
+					)
+				})
+			} else return null;
+		}
+
+		// the player has picked an NPC and this NPC can trade items
+		const getStore = () => {
+			if ( this.state.selectedNPC !== null ) {
+				const storeOwner = this.state.selectedNPC;
+				console.log("owner: ", storeOwner)
+				console.log("this.state: ", this.state)
+				return <Store storeOwner={storeOwner} />
+			} else {
+
+			}
+
 		}
 
 		return (
 			<div className="panel">
-				<div style="display: flex; flex-direciton: row; justify-content: space-between">
-					<div>
-							<div>{this.state.selectedItem.name}</div>
-							<div>{this.state.selectedItem.cost} {this.state.selectedItem.currency}</div>
-							<button>buy</button>
-					</div>
-					<div>{npc.name}</div>
-				</div>
-				<div>this.state.conversation</div>
-				<div>
-					<div style="display: flex; flex-direciton: row; justify-content: space-between">
-						{getItemsForSale()}
-					</div>
-				</div>
+			  {getPickNPC()}
+				{getStore()}
 			</div>
 		);
 	}
-
 }
 
 const mapStateToProps = ({grid, player}) => {

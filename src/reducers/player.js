@@ -29,6 +29,8 @@ const initialState = {
 export default (state = initialState, { type, payload }) => {
 	const currency = state.currency;
 	switch (type) {
+		case t.TALK_TO_NPC:
+			return { ...state, npcsAroundMe: payload.npcsAroundMe};
 		case t.ADD_GOLD:
 			return { ...state, currency: {...currency, gold: payload }};
 		case t.REMOVE_GOLD:
