@@ -16,37 +16,23 @@ export function selectNPC(npc) {
   };
 }
 
-export function talkToNPC(npcsAroundMe) {
 
-  /*
-  Conversation
-  when you start, a conversation the NPC Store overlay appears which:
-  1. shows the npc and conversation options
-  2. if the npc has item to exchange, it will show the store but not everyone npc has items
-  */
-
+export function npcBoughtItem(item, npc) {
   return {
-    type: t.TALK_TO_NPC,
-    payload: {npcsAroundMe}
+    type: t.NPC_BOUGHT_ITEM,
+    payload: {
+      item,
+      npc,
+    }
   };
 }
 
-export function buyItem(item) {
-
+export function npcSoldItem(item, npc) {
   return {
-    type: t.BUY_ITEM,
-  };
-}
-
-export function sellItem(item) {
-  return {
-    type: t.SELL_ITEM,
-  };
-}
-
-// when you an item and an NPC has item but you or the NPC may not have currency
-export function tradeItem(playerItem, npcItem) {
-  return {
-    type: t.TRADE_ITEM,
+    type: t.NPC_SOLD_ITEM,
+    payload: {
+      item,
+      npc,  
+    }
   };
 }

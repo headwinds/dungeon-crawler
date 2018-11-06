@@ -42,7 +42,7 @@ class NPCStore extends Component {
 		window.removeEventListener('keydown', this.handleKeyPress);
 	}
 
-	componentDidReceiveProps(nextProps){
+	componentWillReceiveProps(nextProps){
 		console.log("npc-store componentDidReceiveProps", nextProps)
 	}
 
@@ -76,16 +76,24 @@ class NPCStore extends Component {
 		// if there are multiple npcs around, first you need to pick one to interact with...
 		const getPickNPC = () => {
 			if (player.npcsAroundMe.length > 0 && this.state.selectedNPC === null) {
-				return player.npcsAroundMe.map( (npc, idx) => {
-
+				const list = player.npcsAroundMe.map( (npc, idx) => {
 					return (
 						<div key={idx}
-								 style={{margin: 20}}
+								 className="selectItem"
 								 onClick={() => this.handleSelectNPC(npc)}>
 							{npc.name}
 						</div>
 					)
 				})
+
+				return (
+					<div>
+						<div>Who would you like to speak to?</div>
+						{list}
+					</div>
+				)
+
+
 			} else return null;
 		}
 

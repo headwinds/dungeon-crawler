@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { buyItem, sellItem, tradeItem } from '../../actions/npc';
-
-const defaultItems = [
-	{name: "sword", cost: 30, currency: "copper"}
-]
+import { tradeItem } from '../../actions/player';
+import {newMessage} from '../../actions/';
+import { displayCost } from '../../utils/currency-utils';
 
 const rowStle = {display: "flex", flexDireciton: "row", justifyContent: "space-between"};
 
@@ -14,10 +12,12 @@ class Store extends Component {
 
 		console.log("store ", this.props)
 
+		const randomIdx = Math.floor( Math.random() * this.props.storeOwner.greetings.length );
+
 		this.state = {
-			conversation: "conversational text here...",
-			items: defaultItems,
-			selectedItem: defaultItems[0],
+			conversation: this.props.storeOwner.greetings[randomIdx],
+			items: this.props.storeOwner.inventory,
+			selectedItem: this.props.storeOwner.inventory[0],
 			storeOwner: this.props.storeOwner,
 		}
 
@@ -32,8 +32,9 @@ class Store extends Component {
 		window.removeEventListener('keydown', this.handleKeyPress);
 	}
 
-	handleItemClick(e){
+	handleSelectItemClick(selectedItem){
 
+		this.setState({selectedItem})
 	}
 
 	handleKeyPress(e) {
@@ -51,15 +52,29 @@ class Store extends Component {
 		*/
 	}
 
+	handleBuyItemClick(){
+		console.log("buy item");
+
+		if (this.state.selectedItem === null) return;
+
+		const buyer = this.props.player;
+		const seller = this.state.selectedNPC;
+		const item = {...this.state.selectedItem, currency: this.state.selectedItem.cost};
+
+		this.props.tradeItem(item, buyer, seller)
+
+	}
+
 	render() {
 		const { npc, player } = this.props;
 
-
 		const getItemsForSale = () => {
 			return this.state.items.map( (item,idx) => {
-				return (<div onClick={this.handleItemClick} key="btn">
+				return (<div onClick={() => this.handleSelectItemClick(item)}
+										 key={"btn" + idx}
+										 className="selectItem">
 									<div key={"name" + idx}>{item.name}</div>
-									<div key={"cost" + idx}>{item.cost} {item.currency}</div>
+									<div key={"cost" + idx}>{displayCost(item)}</div>
 							 </div>)
 			})
 		}
@@ -69,10 +84,8 @@ class Store extends Component {
 			<div className="panel">
 				<div style={rowStle}>
 					<div>
-							<div>{this.state.selectedItem.name}</div>
-							<div>{this.state.selectedItem.cost} {this.state.selectedItem.currency}</div>
 							<div>
-								<button className="npcStoreButton">Buy</button>
+								<button className="npcStoreButton" onClick={()=> this.handleBuyItemClick() }>Buy</button>
 							</div>
 					</div>
 					<div>{this.state.storeOwner.name}</div>
@@ -94,10 +107,8 @@ const mapStateToProps = ({grid, player}) => {
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		//lookAround: (entities) => dispatch(lookAround(entities)),
-		buyItem: (npcItem) => dispatch(buyItem(npcItem)),
-		sellItem: (playerItem) => dispatch(sellItem(playerItem)),
-		tradeItem: (playerItem, npcItem) => dispatch(tradeItem(playerItem, npcIte)),
+		tradeItem: (item, buyer, seller) => dispatch(tradeItem(item, buyer, seller)),
+		newMessage: (message) => dispatch(newMessage(message))
 	};
 };
 

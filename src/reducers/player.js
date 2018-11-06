@@ -7,7 +7,7 @@ const initialState = {
 	currency: {
 		gold: 0,
 		silver: 0,
-		copper: 0
+		copper: 500
 	},
 	weapon: {
 		name: 'Fist',
@@ -23,6 +23,7 @@ const initialState = {
 		action: "Look",
 		aroundMe: "press l to look around",
 	},
+	inventory: [], // as a mechanic I want to limit the investory to 6 items
 	npcsAroundMe: [],
 };
 
@@ -31,6 +32,10 @@ export default (state = initialState, { type, payload }) => {
 	switch (type) {
 		case t.TALK_TO_NPC:
 			return { ...state, npcsAroundMe: payload.npcsAroundMe};
+		case t.PLAYER_BOUGHT_ITEM:
+				return { ...state, currency: payload.currency, inventory: payload.inventory};
+		case t.PLAYER_SOLD_ITEM:
+			return { ...state, currency: payload.currency, inventory: payload.inventory};
 		case t.ADD_GOLD:
 			return { ...state, currency: {...currency, gold: payload }};
 		case t.REMOVE_GOLD:

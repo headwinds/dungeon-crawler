@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import { toggleFogMode, restartGame } from '../actions';
 import { lookAround } from '../actions/examine';
-import { talkToNPC } from '../actions/npc';
+import { talkToNPC } from '../actions/player';
 import { getNPCsAroundMe } from '../utils/npc-utils';
 
 class PlayerSettings extends Component {

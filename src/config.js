@@ -6,7 +6,8 @@ const headwinds = {
   FOG_MODE: false,
   GAME_TITLE: "Cabin Quest",
   GAME_SUBTITLE: " explore time between city and country",
-  GAME_URL: "https://cabinquest.now.sh"
+  GAME_URL: "https://cabinquest.now.sh",
+  MAX_INVENTORY_ITEMS: 6,
 }
 
 const peted = {
@@ -16,7 +17,8 @@ const peted = {
   FOG_MODE: true,
   GAME_TITLE: "THE GRID",
   GAME_SUBTITLE: "- Roguelike",
-  GAME_URL: "https://thepeted.github.io/dungeon-crawler"
+  GAME_URL: "https://thepeted.github.io/dungeon-crawler",
+  MAX_INVENTORY_ITEMS: 6,
 }
 
 const currentConfig = peted;

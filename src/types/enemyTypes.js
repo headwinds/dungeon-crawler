@@ -1,3 +1,15 @@
+// actors should be imported
+
+const enemy = {
+  type: "enemy",
+  name: "",
+  health: 100,
+  weapon: "",
+  armour: "",
+  speed: 10,
+  accuracy: 10,
+}
+
 const enemyTypes = {
   1:"Rat",
   2:"Kobold",

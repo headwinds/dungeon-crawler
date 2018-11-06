@@ -68,7 +68,7 @@ function modifyHealth(payload) {
 	};
 }
 
-function newMessage(payload) {
+export function newMessage(payload) {
 	return {
 		type: t.NEW_MESSAGE,
 		payload
