@@ -1,4 +1,11 @@
 
+/*
+headwinds
+
+need to fix issue where dialog with NPC is hidden behind scoreboard
+
+*/
+
 const headwinds = {
   TIPS_ALONG_BOTTOM: false,
   GAME_SHOW_TITLE: false,
