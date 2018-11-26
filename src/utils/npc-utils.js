@@ -9,15 +9,13 @@ export function getNPCsAroundMe(entities) {
 
 		row.filter( entity => {
 			if (entity.type === "npc") {
-				console.log("hey npc: ", entity);
+
 			}
 		});
 
 		if (closeByEntities.length > 0) entitiesBesideMe.push(closeByEntities)
 
 	});
-// sets make unique
-	console.log("beside me:" , entitiesBesideMe)
 
 	if (entitiesBesideMe.length > 0) {
 		const npcsAroundMe = [];

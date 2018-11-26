@@ -40,6 +40,7 @@ const config = {
   CURRENCY_SILVER_LABEL: "Silver",
   CURRENCY_COPPER_LABEL: "Copper",
   GAME_URL: currentConfig.GAME_URL,
+  MAX_INVENTORY_ITEMS: currentConfig.MAX_INVENTORY_ITEMS,
 }
 
 export default config;

@@ -79,7 +79,10 @@ export function tradeItem(item, buyer, seller) {
 
     // do I have room for it my inventory?
 
-    if (buyer.inventory >= config.MAX_INVENTORY_ITEMS) {
+     console.log("max ", config.MAX_INVENTORY_ITEMS )
+     console.log("max vs", buyer.inventory.length  )
+
+    if (buyer.inventory.length >= config.MAX_INVENTORY_ITEMS) {
 
       actions.push(
         itemTradeFail(),

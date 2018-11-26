@@ -19,7 +19,7 @@ export default (gameMap, level = 1) => {
 
 	const npcTrader = npcTypes.filter( npc => npc.profession.toLowerCase() === "trader")[0];
 	const npcs = [];
-	for (let i = 0; i < 4; i++) {
+	for (let i = 0; i < 30; i++) {
 		npcs.push({...npcTrader}); // if you don't use spread, it will create an immutable tile and the distance calc will fail
 	}
 

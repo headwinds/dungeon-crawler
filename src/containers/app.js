@@ -2,6 +2,7 @@ import { connect } from 'react-redux';
 import React from 'react';
 import config from '../config.js';
 
+import Backpack from '../containers/Backpack';
 import Game from '../containers/game';
 import Header from '../components/header';
 import Messages from '../containers/messages';
@@ -31,6 +32,9 @@ const App = ({grid, player}) => {
 				<Game/>
 				<div className="npcStore">
 					<NPCStore />
+				</div>
+				<div>
+					<Backpack />
 				</div>
 				<div className={sidebarClass}>
 					<Scoreboard player={player} grid={grid}/>

@@ -4,7 +4,9 @@ import { buyItem, sellItem, tradeItem } from '../../actions/npc';
 import Store from './store';
 
 const defaultItems = [
-	{name: "sword", cost: 30, currency: "copper"}
+	{name: "sword", cost: 30, currency: "copper"},
+	{name: "health potion", cost: 30, currency: "copper"},
+	{name: "shield", cost: 30, currency: "copper"},
 ]
 
 const rowStle = {display: "flex", flexDireciton: "row", justifyContent: "space-between"};
@@ -76,12 +78,19 @@ class NPCStore extends Component {
 		// if there are multiple npcs around, first you need to pick one to interact with...
 		const getPickNPC = () => {
 			if (player.npcsAroundMe.length > 0 && this.state.selectedNPC === null) {
+
 				const list = player.npcsAroundMe.map( (npc, idx) => {
+					//const class = (npc.selected) ? selectItem : ;
 					return (
 						<div key={idx}
 								 className="selectItem"
 								 onClick={() => this.handleSelectNPC(npc)}>
-							{npc.name}
+								 <div>
+								 		{/* <img src={npc.portrait} /> */}
+								 </div>
+								 <div>
+								 		<p>{npc.name}</p>
+								 </div>
 						</div>
 					)
 				})

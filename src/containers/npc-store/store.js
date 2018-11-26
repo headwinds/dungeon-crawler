@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { tradeItem } from '../../actions/player';
 import {newMessage} from '../../actions/';
 import { displayCost } from '../../utils/currency-utils';
+import StoreItem from './storeItem';
 
 const rowStle = {display: "flex", flexDireciton: "row", justifyContent: "space-between"};
 
@@ -17,7 +18,7 @@ class Store extends Component {
 		this.state = {
 			conversation: this.props.storeOwner.greetings[randomIdx],
 			items: this.props.storeOwner.inventory,
-			selectedItem: this.props.storeOwner.inventory[0],
+			selectedItem: null,
 			storeOwner: this.props.storeOwner,
 		}
 
@@ -32,9 +33,11 @@ class Store extends Component {
 		window.removeEventListener('keydown', this.handleKeyPress);
 	}
 
-	handleSelectItemClick(selectedItem){
+	handleSelectItemClick(selectedItem,scope){
 
-		this.setState({selectedItem})
+		const self = scope;
+		console.log("handleSelectItemClick self ", self);
+		self.setState({selectedItem})
 	}
 
 	handleKeyPress(e) {
@@ -70,12 +73,7 @@ class Store extends Component {
 
 		const getItemsForSale = () => {
 			return this.state.items.map( (item,idx) => {
-				return (<div onClick={() => this.handleSelectItemClick(item)}
-										 key={"btn" + idx}
-										 className="selectItem">
-									<div key={"name" + idx}>{item.name}</div>
-									<div key={"cost" + idx}>{displayCost(item)}</div>
-							 </div>)
+				return (<StoreItem item={item} key={idx} handleClick={this.handleSelectItemClick} scope={this} />)
 			})
 		}
 
@@ -83,11 +81,6 @@ class Store extends Component {
 		return (
 			<div className="panel">
 				<div style={rowStle}>
-					<div>
-							<div>
-								<button className="npcStoreButton" onClick={()=> this.handleBuyItemClick() }>Buy</button>
-							</div>
-					</div>
 					<div>{this.state.storeOwner.name}</div>
 				</div>
 				<div>{this.state.conversation}</div>
@@ -95,6 +88,11 @@ class Store extends Component {
 					<div style={rowStle}>
 						{getItemsForSale()}
 					</div>
+				</div>
+				<div>
+						<div>
+							<button className="npcStoreButton" onClick={()=> this.handleBuyItemClick() }>Buy</button>
+						</div>
 				</div>
 		</div>
 		);
