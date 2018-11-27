@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import config from '../config.js';
 
+
 import playerInput, {
 	createLevel,
 	openingMessages,
@@ -10,6 +11,7 @@ import playerInput, {
 } from '../actions/';
 
 import Cell from '../components/cell';
+import Player from '../containers/player';
 
 class Grid extends Component {
 	constructor() {
@@ -125,16 +127,32 @@ class Grid extends Component {
 						row
 						.filter((row, i) => i >= left && i < right)
 						.map((cell, j) => {
-							return (
-								<Cell
-									key={j}
-									cell={cell}
-									distance={cell.distanceFromPlayer}
-									zone={this.props.grid.dungeonLevel}
-									transit={this.props.grid.dungeonTransit}
-									visible={this.props.fogMode}
-									/>
-							);
+
+							if (cell.type === "player") {
+
+								const playerCellProps = {
+									key:j,
+									cell: cell,
+									distance:cell.distanceFromPlayer,
+									zone:this.props.grid.dungeonLevel,
+									transit:this.props.grid.dungeonTransit,
+									visible:this.props.fogMode,
+								}
+
+								return <Player key={j} cellProps={playerCellProps} />
+
+							} else {
+								return (
+									<Cell
+										key={j}
+										cell={cell}
+										distance={cell.distanceFromPlayer}
+										zone={this.props.grid.dungeonLevel}
+										transit={this.props.grid.dungeonTransit}
+										visible={this.props.fogMode}
+										/>
+								);
+							}
 						})
 					}
 				</div>
