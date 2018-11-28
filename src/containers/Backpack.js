@@ -1,10 +1,15 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Inventory from '../components/Inventory';
+import ItemInteractions from '../components/item-interactions';
 
 class Backpack extends Component {
 	constructor() {
 		super();
+
+		this.state = {
+			itemSelected: null, 
+		}
 
 	}
 
@@ -16,12 +21,16 @@ class Backpack extends Component {
 
 	}
 
+	handleItemSelected(){
+
+	}
+
 	render() {
 		const { player } = this.props;
     console.log("Backpack render: ", player.inventory);
 		return (
 			<div className="panel">
-				<Inventory items={player.inventory} />
+				<Inventory items={player.inventory} handleItemSelected={this.handleItemSelected} />
 			</div>
 		);
 	}

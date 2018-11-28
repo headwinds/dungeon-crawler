@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import React from 'react';
 import config from '../config.js';
 
-import Backpack from '../containers/Backpack';
+import Backpack from '../containers/backpack';
 import Game from '../containers/game';
 import Header from '../components/header';
 import Messages from '../containers/messages';

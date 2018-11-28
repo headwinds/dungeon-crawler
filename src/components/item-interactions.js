@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import Item from './inventory-item';
 
-class Inventory extends Component {
+
+class ItemInteractions extends Component {
 	constructor() {
 		super();
 
@@ -36,32 +36,38 @@ class Inventory extends Component {
 
 	}
 
-	handleClick(){
+	handleEquipClick(item){
 
 	}
 
+	handleDiscardClick(item){
+
+	}
+
+	handleTradeClick(item){
+
+	}
+
+	handleCraftClick(item){
+
+	}
 
 	render() {
-		const { items } = this.props;
-		const list = items.map((item, idx) => {
-				return (<Item key={idx} item={item}
-											handleMouseOver={this.handleMouseOver}
-											handleMouseOut={this.handleMouseOver}
-											handleClick={this.handleClick}></Item>)
-		})
-
 		return (
 			<div>
-				{list}
+
 			</div>
 		);
 	}
 	handleKeyPress(e) {
+
+		// equip or discard item...
+
     console.log("keyCode: ", e.keyCode);
 		switch (e.keyCode) {
 
 			case 73:
-			  this.toggleOpen();
+
 				break;
 			default:
 				return;
@@ -79,4 +85,4 @@ const mapDispatchToProps = (dispatch) => {
 	};
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Inventory);
+export default connect(mapStateToProps, mapDispatchToProps)(ItemInteractions);
