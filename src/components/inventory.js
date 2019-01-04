@@ -44,14 +44,15 @@ class Inventory extends Component {
 	render() {
 		const { items } = this.props;
 		const list = items.map((item, idx) => {
-				return (<Item key={idx} item={item}
+				return (<Item key={idx} 
+											item={item}
 											handleMouseOver={this.handleMouseOver}
 											handleMouseOut={this.handleMouseOver}
 											handleClick={this.handleClick}></Item>)
 		})
 
 		return (
-			<div>
+			<div style={{display: "flex", flexDirection: "row"}}>
 				{list}
 			</div>
 		);

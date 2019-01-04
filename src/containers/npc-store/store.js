@@ -79,7 +79,7 @@ class Store extends Component {
 
 
 		return (
-			<div className="panel">
+			<div>
 				<div style={rowStle}>
 					<div>{this.state.storeOwner.name}</div>
 				</div>
@@ -94,7 +94,7 @@ class Store extends Component {
 							<button className="npcStoreButton" onClick={()=> this.handleBuyItemClick() }>Buy</button>
 						</div>
 				</div>
-		</div>
+			</div>
 		);
 	}
 }

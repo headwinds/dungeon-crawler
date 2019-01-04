@@ -1,4 +1,5 @@
 @import './resets/reset.css'
+@import '../containers/npc-store/_npc-store'
 
 =entity($color)
   background: $color
@@ -309,17 +310,3 @@ input:checked + label::before
       color: #78d376
 
 
-// STORE
-
-.selectItem
-    display: block
-    position: relative
-    margin: 10px
-    border: 1px solid #333
-    padding: 10px
-    pointer-events: all
-    text-align: center
-    cursor: pointer
-
-.selectItem:hover
-   border: 1px solid gold

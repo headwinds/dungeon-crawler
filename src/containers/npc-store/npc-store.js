@@ -86,10 +86,10 @@ class NPCStore extends Component {
 								 className="selectItem"
 								 onClick={() => this.handleSelectNPC(npc)}>
 								 <div>
-								 		{/* <img src={npc.portrait} /> */}
+								 	{/* <img src={npc.portrait} /> */}
 								 </div>
 								 <div>
-								 		<p>{npc.name}</p>
+								 	<p>{npc.name}</p>
 								 </div>
 						</div>
 					)

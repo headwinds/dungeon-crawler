@@ -30,13 +30,13 @@ const App = ({grid, player}) => {
 			<Header level={grid.dungeonLevel}/>
 			<div id={app}>
 				<Game/>
-				<div className="npcStore">
-					<NPCStore />
-				</div>
-				<div>
-					<Backpack />
-				</div>
-				<div className={sidebarClass}>
+					<div className={sidebarClass}>
+					<div className="npcStore">
+						<NPCStore />
+					</div>
+					<div class="backpack">
+						<Backpack />
+					</div>
 					<Scoreboard player={player} grid={grid}/>
 					<PlayerSettings/>
 					<Messages/>
