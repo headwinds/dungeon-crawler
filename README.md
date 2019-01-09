@@ -49,3 +49,6 @@ From the high fantasy of Tolkien's Middle-earth to the gritty sci-fi of Alien's 
 ## General Rogue-likes
 
 * [How to Make a Roguelike](http://www.gamasutra.com/blogs/JoshGe/20181029/329512/How_to_Make_a_Roguelike.php)
+* [The Only Shadow...](https://killscreen.com/articles/work-new-roguelike-can-time-travelling-historian/)
+* [Loot Rasals](https://killscreen.com/articles/release-inner-hoarder-roguelike-loot-rascals/)
+* [Quill & Dagger](http://dom2d.tumblr.com/post/129652868204/quill-dagger-is-coming-along-nicely)

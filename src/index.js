@@ -27,10 +27,10 @@ const loggerMiddleware = createLogger({actionTransformer});
 const createStoreWithMiddleware = applyMiddleware(thunk, loggerMiddleware)(createStore);
 import reducers from './reducers';
 
-import App from './containers/app';
+import DungeonCrawler from './containers/DungeonCrawler';
 
 ReactDOM.render(
 	<Provider store={createStoreWithMiddleware(enableBatching(reducers))}>
-		<App/>
+		<DungeonCrawler/>
 	</Provider>
 	, document.querySelector('.container'));
