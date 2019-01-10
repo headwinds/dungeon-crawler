@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import { lookAround } from '../actions/examine';
-import { talkToNPC } from '../actions/player';
+import { talkToNPC, interactWithNeutral } from '../actions/player';
 import { getNPCsAroundMe } from '../utils/npc-utils';
+//import { getNeutralsAroundMe } from '../utils/npc-utils';
 
 import Cell from '../components/cell';
 
@@ -37,15 +38,20 @@ class Player extends Component {
 		);
 	}
 	handleKeyPress(e) {
-		//console.log("code:",e.keyCode)
+		console.log("code:",e.keyCode)
 		switch (e.keyCode) {
 			case 76:
-					this.props.lookAround(this.props.grid.entities);
-					break;
+				this.props.lookAround(this.props.grid.entities);
+				break;
 			case 84:
-					const npcsAroundMe = getNPCsAroundMe(this.props.grid.entities)
-					if ( npcsAroundMe.length > 0) this.props.talkToNPC(npcsAroundMe);
-					break;
+				const npcsAroundMe = getNPCsAroundMe(this.props.grid.entities)
+				if ( npcsAroundMe.length > 0) this.props.talkToNPC(npcsAroundMe);
+				break;
+			case 72:
+				//this.props.lookAround(this.props.grid.entities);
+				const neutralsAroundMe = getNeutralsAroundMe(this.props.grid.entities)
+				if ( neutralsAroundMe.length > 0) this.props.interactWithNeutral(npcsAroundMe, "harvest");
+				break;
 			default:
 				return;
 		}

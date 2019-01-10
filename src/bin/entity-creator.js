@@ -3,6 +3,7 @@ import * as c from '../constants/settings';
 import weaponTypes from '../types/weaponTypes';
 import shieldTypes from '../types/shieldTypes';
 import enemyTypes from '../types/enemyTypes';
+import neutralTypes from '../types/neutralTypes';
 import potionTypes from '../types/potionTypes';
 import npcTypes from '../types/npcTypes';
 
@@ -32,6 +33,21 @@ export default (gameMap, level = 1) => {
 			level: _.random(level, _.random(level - 1 ? level - 1 : level, level + 1)),
 			type: 'enemy',
 			name: enemyTypes[level]
+		});
+	}
+
+	// not enemies but will attack if attacked 
+	// animals like deer can be farmed  
+	// but should be able pass by any neutral without combat 
+	const neutral = [];
+	for (let i = 0; i < 7; i++) {
+		neutral.push({
+			health: level * 30 + 40,
+			// half of the enememies will be a level higher or lower (except on
+			// level 1, where ~1/4 enemies are a level higher)
+			level: _.random(level, _.random(level - 1 ? level - 1 : level, level + 1)),
+			type: 'neutral',
+			name: neutralTypes[level]
 		});
 	}
 
@@ -82,6 +98,7 @@ export default (gameMap, level = 1) => {
 	let playerPosition = [];
 	[	potions,
 		enemies,
+		neutral,
 		weapons,
 		shields,
 		exits,

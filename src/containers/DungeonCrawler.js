@@ -2,14 +2,14 @@ import { connect } from 'react-redux';
 import React from 'react';
 import config from '../config.js';
 
-import Backpack from '../containers/backpack';
-import Game from '../containers/game';
+import Backpack from './backpack';
+import Game from './game';
 import Header from '../components/header';
-import Messages from '../containers/messages';
-import NPCStore from '../containers/npc-store/npc-store';
-import PlayerSettings from '../containers/player-settings';
+import Messages from './messages';
+import NPCStore from './npc-store/npc-store';
+import PlayerSettings from './player-settings';
 import Scoreboard from '../components/scoreboard';
-import Tips from '../containers/tips';
+import Tips from './tips';
 
 const DungeonCrawler = ({grid, player}) => {
 	const sidebarClass = (config.VP_TYPE === "full") ? "sidebar_fullscreen" : "sidebar";

@@ -37,6 +37,23 @@ export function talkToNPC(npcsAroundMe) {
   };
 }
 
+export function interactWithNeutral(neutralsAroundMe) {
+
+  /*
+  Conversation
+  when you start, a conversation the NPC Store overlay appears which:
+  1. shows the npc and conversation options
+  2. if the npc has item to exchange, it will show the store but not everyone npc has items
+  */
+
+  return {
+    type: t.INTERACT_WITH_NEUTRAL,
+    payload: {neutralsAroundMe}
+  };
+}
+
+
+
 export function itemTradeSuccess() {
   return {
     type: t.PLAYER_TRADE_SUCCESS,
