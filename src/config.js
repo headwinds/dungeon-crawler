@@ -15,6 +15,7 @@ const headwinds = {
   GAME_SUBTITLE: " explore time between city and country",
   GAME_URL: "https://cabinquest.now.sh",
   MAX_INVENTORY_ITEMS: 6,
+  BACKEND: "python",
 }
 
 const peted = {
@@ -26,9 +27,10 @@ const peted = {
   GAME_SUBTITLE: "- Roguelike",
   GAME_URL: "https://thepeted.github.io/dungeon-crawler",
   MAX_INVENTORY_ITEMS: 6,
+  BACKEND: "none",
 }
 
-const currentConfig = peted;
+const currentConfig = headwinds;
 
 const config = {
   VP_WIDTH_RATIO_CONTAINED : 30,
@@ -48,6 +50,7 @@ const config = {
   CURRENCY_COPPER_LABEL: "Copper",
   GAME_URL: currentConfig.GAME_URL,
   MAX_INVENTORY_ITEMS: currentConfig.MAX_INVENTORY_ITEMS,
+  BACKEND: currentConfig.BACKEND,
 }
 
 export default config;

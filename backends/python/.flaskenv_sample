@@ -1,0 +1,7 @@
+# Production Enviroment should be set to 'production'
+FLASK_ENV = "development"
+FLASK_APP = "app"
+FLASK_TWITTER_KEY = ""
+FLASK_TWITTER_SECRET = ""
+# Uncomment this to debug:
+# FLASK_DEBUG=1

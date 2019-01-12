@@ -4,7 +4,7 @@ A 2D Dungeon Crawler implemented in React (16.6) and Redux, including `redux-thu
 
 Check out the live demo [here](https://thepeted.github.io/dungeon-crawler).
 
-## Run locally
+## Run Frontend locally
 
 Checkout this repo and
 ```
@@ -12,13 +12,43 @@ $ yarn install
 $ yarn start
 ```
 
-## Deploy
+## Run Frontend & Backend locally
+
+### Python
+
+```
+$ cd backends/python
+$ python app.py
+```
+
+### Python & Docker
+
+```
+docker build -t your-app-name-here .
+docker run -p 5000:5000 your-app-name-here
+```
+
+## Deploy Frontend
 
 deploy to [zeit.co](https://zeit.co) via:
 
 ```
 now
 ```
+
+## Deploy Frontend & Backend
+
+deploy to deploy to [zeit.co](https://zeit.co) via:
+
+```
+cd backends/python
+now
+```
+Note: this is v1 deploy - I didn't have much luck with the new v2 approach - don't add now.json for now
+
+* [zeit tech note about its now.json file](https://github.com/zeit/now-examples/tree/master/python)
+* [serverless-docker](https://zeit.co/blog/serverless-docker)
+* [now 2 python example](https://github.com/zeit/now-examples/tree/master/python) 
 
 ## Features
 

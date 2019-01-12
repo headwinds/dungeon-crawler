@@ -1,0 +1,11 @@
+gunicorn==19.7.1
+flask-restplus
+python-dotenv
+flask
+flask-dance
+flask-cors
+werkzeug
+flask_restful
+requests
+bs4
+nltk
