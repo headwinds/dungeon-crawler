@@ -36,3 +36,13 @@ export function npcSoldItem(item, npc) {
     }
   };
 }
+
+export function npcTradedItem(item, npc) {
+  return {
+    type: t.NPC_TRADED_ITEM,
+    payload: {
+      item,
+      npc,  
+    }
+  };
+}

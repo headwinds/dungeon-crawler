@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import Inventory from '../components/Inventory';
+import Inventory from '../components/inventory';
 import ItemInteractions from '../components/item-interactions';
 
 class Backpack extends Component {

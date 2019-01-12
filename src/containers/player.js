@@ -49,8 +49,8 @@ class Player extends Component {
 				break;
 			case 72:
 				//this.props.lookAround(this.props.grid.entities);
-				const neutralsAroundMe = getNeutralsAroundMe(this.props.grid.entities)
-				if ( neutralsAroundMe.length > 0) this.props.interactWithNeutral(npcsAroundMe, "harvest");
+				//const neutralsAroundMe = getNeutralsAroundMe(this.props.grid.entities)
+				//if ( neutralsAroundMe.length > 0) this.props.interactWithNeutral(npcsAroundMe, "harvest");
 				break;
 			default:
 				return;

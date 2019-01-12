@@ -12,6 +12,14 @@ $ yarn install
 $ yarn start
 ```
 
+## Deploy
+
+deploy to [zeit.co](https://zeit.co) via:
+
+```
+now
+```
+
 ## Features
 
 - Randomly generated map.  The viewport of the map is sized based on browser window size.
@@ -46,9 +54,17 @@ From the high fantasy of Tolkien's Middle-earth to the gritty sci-fi of Alien's 
 * [game-development-in-clojure](https://clojurefun.wordpress.com/2013/03/21/game-development-in-clojure-alchemy-7drl-post-mortem/)
 * [Clojure rogue-like-like-like-like-like because why not?](https://github.com/aaron-santos/robinson)
 
+## Machine Learning & AI with Rogue-likes
+
+* [teaching ai play simple game using q learning](https://www.practicalai.io/teaching-ai-play-simple-game-using-q-learning/)
+* [using machine learning agents in a real game a beginners-guide/](https://blogs.unity3d.com/2017/12/11/using-machine-learning-agents-in-a-real-game-a-beginners-guide/)
+
 ## General Rogue-likes
 
 * [How to Make a Roguelike](http://www.gamasutra.com/blogs/JoshGe/20181029/329512/How_to_Make_a_Roguelike.php)
 * [The Only Shadow...](https://killscreen.com/articles/work-new-roguelike-can-time-travelling-historian/)
 * [Loot Rasals](https://killscreen.com/articles/release-inner-hoarder-roguelike-loot-rascals/)
 * [Quill & Dagger](http://dom2d.tumblr.com/post/129652868204/quill-dagger-is-coming-along-nicely)
+* [roguebasin](http://www.roguebasin.com/)
+
+

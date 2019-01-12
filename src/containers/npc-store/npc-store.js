@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { buyItem, sellItem, tradeItem } from '../../actions/npc';
+import { npcBoughtItem, npcSoldItem, npcTradedItem } from '../../actions/npc';
 import Store from './store';
 
 const defaultItems = [
@@ -135,10 +135,11 @@ const mapStateToProps = ({grid, player}) => {
 const mapDispatchToProps = (dispatch) => {
 	return {
 		//lookAround: (entities) => dispatch(lookAround(entities)),
-		buyItem: (npcItem) => dispatch(buyItem(npcItem)),
-		sellItem: (playerItem) => dispatch(sellItem(playerItem)),
-		tradeItem: (playerItem, npcItem) => dispatch(tradeItem(playerItem, npcIte)),
+		//buyItem: (npcItem) => dispatch(buyItem(npcItem)),
+		//sellItem: (playerItem) => dispatch(sellItem(playerItem)),
+		//tradeItem: (playerItem, npcItem) => dispatch(tradeItem(playerItem, npcIte)),
 	};
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(NPCStore);
+

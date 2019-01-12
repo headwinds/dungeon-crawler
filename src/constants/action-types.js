@@ -40,5 +40,5 @@ export const TOGGLE_NPC_STORE = 'TOGGLE_NPC_STORE';
 export const SELECT_NPC = 'SELECT_NPC';
 export const NPC_BOUGHT_ITEM = 'NPC_BOUGHT_ITEM';
 export const NPC_SOLD_ITEM = 'NPC_SOLD_ITEM';
-
+export const NPC_TRADED_ITEM = 'NPC_TRADED_ITEM';
 
