@@ -17,7 +17,7 @@ app.wsgi_app = ProxyFix(app.wsgi_app)
 CORS(app)
 app.register_blueprint(api_bp)
 
-app.secret_key = "viper-probe2" # change the secret to clear the session!
+app.secret_key = "viper-probe3" # change the secret to clear the session!
 
 app.register_blueprint(twitter_bp, url_prefix="/login")
 

@@ -7,6 +7,7 @@ need to fix issue where dialog with NPC is hidden behind scoreboard
 */
 
 const headwinds = {
+  OWNER: "headwinds",
   TIPS_ALONG_BOTTOM: false,
   GAME_SHOW_TITLE: false,
   VP_TYPE: "full",
@@ -16,9 +17,11 @@ const headwinds = {
   GAME_URL: "https://cabinquest.now.sh",
   MAX_INVENTORY_ITEMS: 6,
   BACKEND: "python",
+  WORLDSET: "cabinquest", 
 }
 
 const peted = {
+  OWNER: "peted",
   TIPS_ALONG_BOTTOM: true,
   GAME_SHOW_TITLE: true,
   VP_TYPE: "contained",
@@ -28,13 +31,15 @@ const peted = {
   GAME_URL: "https://thepeted.github.io/dungeon-crawler",
   MAX_INVENTORY_ITEMS: 6,
   BACKEND: "none",
+  WORLDSET: "doom", 
 }
 
 const currentConfig = headwinds;
 
 const config = {
-  VP_WIDTH_RATIO_CONTAINED : 30,
-  VP_HEIGHT_RATIO_CONTAINED : 21,
+  OWNER: currentConfig.OWNER,
+  VP_WIDTH_RATIO_CONTAINED: 30,
+  VP_HEIGHT_RATIO_CONTAINED: 21,
   VP_HEIGHT_RATIO_FULL: 1,
   VP_WIDTH_RATIO_FULL: 1,
   FULL_GRID_RATIO_WIDTH: 24,
@@ -51,6 +56,7 @@ const config = {
   GAME_URL: currentConfig.GAME_URL,
   MAX_INVENTORY_ITEMS: currentConfig.MAX_INVENTORY_ITEMS,
   BACKEND: currentConfig.BACKEND,
+  WORLDSET: currentConfig.WORLDSET
 }
 
 export default config;
