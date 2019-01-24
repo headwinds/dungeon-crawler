@@ -7,7 +7,7 @@ import * as t from '../constants/action-types';
 import config from '../config.js';
 import worldsets from '../worldsets/worldsets';
 
-const gameWorldSet = worldsets[config.OWNER];
+const gameWorldSeq = worldsets[config.OWNER];
 
 function addShield(payload) {
 	return {
@@ -61,7 +61,7 @@ function changePlayerPosition(payload) {
 export function createLevel(level) {
 	return {
 		type: t.CREATE_LEVEL,
-		payload: populateEntities(createMap(), gameWorldSet, level)
+		payload: populateEntities(createMap(), gameWorldSeq, level)
 	};
 }
 

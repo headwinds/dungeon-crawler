@@ -4,13 +4,9 @@ import weaponTypes from '../types/weaponTypes';
 import shieldTypes from '../types/shieldTypes';
 import enemyTypes from '../types/enemyTypes';
 import neutralTypes from '../types/neutralTypes';
-
-// update this to items with configured world set 
-import potionTypes from '../types/potionTypes';
-
 import npcTypes from '../types/npcTypes';
 
-export default (gameMap, gameWorldSet, level = 1) => {
+export default (gameMap, gameWorldSeq, level = 1) => {
 	// 1. create the entities
 	const bosses = [];
 	if (level === 4) {
@@ -67,15 +63,15 @@ export default (gameMap, gameWorldSet, level = 1) => {
 		}
 	];
 
-	const potionTypes = gameWorldSet.items.filter( item => item.type === "potion" );
-	
-
-	const healthPotion = potionTypes.filter( potion => potion.get("modifies") === "health")[0].toJS();
+	const potionArr = gameWorldSeq.get("itemSet").filter( item => item.type === "potion" );	
+	const healthPotionObj = potionArr.filter( potion => potion.modifies === "health")[0];
 	
 	const potions = [];
 	for (let i = 0; i < 5; i++) {
-		potions.push({...healthPotion});
+		potions.push({...healthPotionObj});
 	}
+
+	console.log("potion: ", potions);
 
 	const weapons = [];
 	// weapon types will vary based on the level passed to the parent function

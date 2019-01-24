@@ -8,6 +8,7 @@ const enemy = {
   armour: "",
   speed: 10,
   accuracy: 10,
+  level: 1
 }
 
 const enemyTypes = {
