@@ -269,11 +269,21 @@ export default (vector) => {
 				 if (destination.modifies === "health") {
 					 actions.push(
 	 					modifyHealth(player.health + destination.by),
-	 					newMessage(`You drink a potion for [${destination.modifies}] health`)
+	 					newMessage(`You drink a potion for ${destination.by} ${destination.modifies}`)
 	 				);
 				 }
 
 				break;
+			case 'food':
+
+				if (destination.modifies === "health") {
+					actions.push(
+						modifyHealth(player.health + destination.by),
+						newMessage(`You eat a ${destination.name} for ${destination.by} ${destination.modifies}`)
+					);
+				}
+
+			   break;	
 			case 'weapon':
 				actions.push(
 					addWeapon(destination),

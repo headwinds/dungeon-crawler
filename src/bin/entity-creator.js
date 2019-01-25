@@ -71,7 +71,13 @@ export default (gameMap, gameWorldSeq, level = 1) => {
 		potions.push({...healthPotionObj});
 	}
 
-	console.log("potion: ", potions);
+	const foodArr = gameWorldSeq.get("itemSet").filter( item => item.type === "food" );	
+	const mushroomObj = foodArr.filter( food => food.name === "mushroom")[0];
+	
+	const mushrooms = [];
+	for (let i = 0; i < 5; i++) {
+		mushrooms.push({...mushroomObj});
+	}
 
 	const weapons = [];
 	// weapon types will vary based on the level passed to the parent function
@@ -100,6 +106,7 @@ export default (gameMap, gameWorldSeq, level = 1) => {
 	// we'll need to return the players starting co-ordinates
 	let playerPosition = [];
 	[	potions,
+		mushrooms,
 		enemies,
 		neutral,
 		weapons,

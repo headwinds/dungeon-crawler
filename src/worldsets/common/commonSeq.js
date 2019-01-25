@@ -2,6 +2,7 @@ import {Set, Seq} from "immutable";
 
 import ItemModel from "../../models/ItemModel";
 import EnemyModel from "../../models/EnemyModel";
+import WeaponModel from "../../models/WeaponModel";
 import WorldModel from "../../models/WorldModel";
 
 // ITEMS
@@ -16,9 +17,9 @@ const potionItem = new ItemModel({
 
 const mushroomItem = new ItemModel({
   name: 'mushroom',
-  modifies: "nutrition",
+  modifies: "health",
   by: 10,
-  type: 'plant',
+  type: 'food',
 })
 
 const itemSet = new Set([mushroomItem, potionItem]);
@@ -77,9 +78,87 @@ const npcSet = new Set([mushroomItem]);
 
 // SHIELDS
 
+const shieldTypes = [
+  {
+    name: 'Hat',
+    protection: 1,
+    type: 'shield',
+  },
+  {
+    name: 'Bracers',
+    protection: 5,
+    type: 'shield',
+  },
+  {
+    name: 'Rusty Shield',
+    protection: 10,
+    type: 'shield',
+  },
+  {
+    name: 'Wooden Shield',
+    protection: 12,
+    type: 'shield',
+  },
+  {
+    name: 'Leather Shield',
+    protection: 20,
+    type: 'shield',
+  },
+  {
+    name: 'Chain Shield',
+    protection: 25,
+    type: 'shield',
+  },
+  {
+    name: 'Plate Shield',
+    protection: 40,
+    type: 'shield',
+  },
+  {
+    name: 'Elven Shield',
+    protection: 50,
+    type: 'shield',
+  }
+];
+
 const shieldSet = new Set([mushroomItem]);
 
 // WEAPONS
+
+const weaponTypes = [
+  {
+    name: 'Big Stick',
+    damage: 10
+  },
+  {
+    name: 'Club',
+    damage: 15
+  },
+  {
+    name: 'Rusty Sword',
+    damage: 20
+  },
+  {
+    name: 'Butcher Knife',
+    damage: 25
+  },
+  {
+    name: 'Mace',
+    damage: 30
+  },
+  {
+    name: 'Flail',
+    damage: 35
+  },
+  {
+    name: 'Long Sword',
+    damage: 40
+  },
+  {
+    name: 'Broad Sword',
+    damage: 50
+  }
+];
 
 const weaponSet = new Set([mushroomItem]);
 
