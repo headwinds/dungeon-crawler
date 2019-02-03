@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { npcBoughtItem, npcSoldItem, npcTradedItem } from '../../actions/npc';
+import { npcBoughtItem, npcSoldItem, npcTradedItem } from '../../actions/npc-actions';
 import Store from './store';
 
 const defaultItems = [

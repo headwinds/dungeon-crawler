@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { toggleFogMode, restartGame } from '../actions';
+import { toggleFogMode, restartGame } from '../../actions';
 
 class PlayerSettings extends Component {
 	constructor() {

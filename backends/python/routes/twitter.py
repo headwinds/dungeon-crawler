@@ -30,6 +30,9 @@ class TwitterEndPoint(Resource):
             # return "You are @{screen_name} on Twitter".format(screen_name=resp.json()["screen_name"])
             # return resp.json()
             data = resp.json()
+            print(data)
+            # can I now call the load so that I return the save game ?! possible optimization... 
+            # no point making 2 trips to the client!
             return Response(
                 json.dumps(data),
                 status=200,

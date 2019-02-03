@@ -1,26 +1,34 @@
-import {Set, Seq} from "immutable";
+import { Set, Seq } from "immutable";
 
+import PlayerModel from "../../models/PlayerModel";
 import ItemModel from "../../models/ItemModel";
 import EnemyModel from "../../models/EnemyModel";
 import WeaponModel from "../../models/WeaponModel";
 import WorldModel from "../../models/WorldModel";
 
+// PLAYERS
+
+const defaultPlayer = new PlayerModel({
+  name: "Avatar"
+});
+
+const playerSet = new Set([defaultPlayer]);
+
 // ITEMS
 
-
 const potionItem = new ItemModel({
-  name: 'Health Potion',
+  name: "Health Potion",
   modifies: "health",
   by: 10,
-  type: 'potion',
-})  
+  type: "potion"
+});
 
 const mushroomItem = new ItemModel({
-  name: 'mushroom',
+  name: "mushroom",
   modifies: "health",
   by: 10,
-  type: 'food',
-})
+  type: "food"
+});
 
 const itemSet = new Set([mushroomItem, potionItem]);
 
@@ -34,7 +42,7 @@ const ratEnemy = new EnemyModel({
   speed: 10,
   accuracy: 10,
   level: 1
-})
+});
 
 const koboldEnemy = new EnemyModel({
   name: "Kolbold",
@@ -44,7 +52,7 @@ const koboldEnemy = new EnemyModel({
   speed: 10,
   accuracy: 10,
   level: 1
-})
+});
 
 const darkElfEnemy = new EnemyModel({
   name: "Dark Elf",
@@ -54,7 +62,7 @@ const darkElfEnemy = new EnemyModel({
   speed: 10,
   accuracy: 10,
   level: 1
-})
+});
 
 const bossEnemy = new EnemyModel({
   name: "Boss",
@@ -64,7 +72,7 @@ const bossEnemy = new EnemyModel({
   speed: 10,
   accuracy: 10,
   level: 1
-})
+});
 
 const enemySet = new Set([ratEnemy, koboldEnemy, darkElfEnemy, bossEnemy]);
 
@@ -80,44 +88,44 @@ const npcSet = new Set([mushroomItem]);
 
 const shieldTypes = [
   {
-    name: 'Hat',
+    name: "Hat",
     protection: 1,
-    type: 'shield',
+    type: "shield"
   },
   {
-    name: 'Bracers',
+    name: "Bracers",
     protection: 5,
-    type: 'shield',
+    type: "shield"
   },
   {
-    name: 'Rusty Shield',
+    name: "Rusty Shield",
     protection: 10,
-    type: 'shield',
+    type: "shield"
   },
   {
-    name: 'Wooden Shield',
+    name: "Wooden Shield",
     protection: 12,
-    type: 'shield',
+    type: "shield"
   },
   {
-    name: 'Leather Shield',
+    name: "Leather Shield",
     protection: 20,
-    type: 'shield',
+    type: "shield"
   },
   {
-    name: 'Chain Shield',
+    name: "Chain Shield",
     protection: 25,
-    type: 'shield',
+    type: "shield"
   },
   {
-    name: 'Plate Shield',
+    name: "Plate Shield",
     protection: 40,
-    type: 'shield',
+    type: "shield"
   },
   {
-    name: 'Elven Shield',
+    name: "Elven Shield",
     protection: 50,
-    type: 'shield',
+    type: "shield"
   }
 ];
 
@@ -127,48 +135,54 @@ const shieldSet = new Set([mushroomItem]);
 
 const weaponTypes = [
   {
-    name: 'Big Stick',
+    name: "Big Stick",
     damage: 10
   },
   {
-    name: 'Club',
+    name: "Club",
     damage: 15
   },
   {
-    name: 'Rusty Sword',
+    name: "Rusty Sword",
     damage: 20
   },
   {
-    name: 'Butcher Knife',
+    name: "Butcher Knife",
     damage: 25
   },
   {
-    name: 'Mace',
+    name: "Mace",
     damage: 30
   },
   {
-    name: 'Flail',
+    name: "Flail",
     damage: 35
   },
   {
-    name: 'Long Sword',
+    name: "Long Sword",
     damage: 40
   },
   {
-    name: 'Broad Sword',
+    name: "Broad Sword",
     damage: 50
   }
 ];
 
-const weaponSet = new Set([mushroomItem]);
+const stickWeapon = new WeaponModel({
+  name: "stick",
+});
 
-const world = new WorldModel(
-    {itemSet,
-    enemySet,
-    neutralSet,
-    npcSet,
-    shieldSet,
-    weaponSet})
+const weaponSet = new Set([stickWeapon]);
+
+const world = new WorldModel({
+  playerSet,
+  itemSet,
+  enemySet,
+  neutralSet,
+  npcSet,
+  shieldSet,
+  weaponSet
+});
 
 const commonSeq = new Seq(world.toJS());
 

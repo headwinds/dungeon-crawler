@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { tradeItem } from '../../actions/player';
+import { tradeItem } from '../../actions/player-actions';
 import {newMessage} from '../../actions/';
 import { displayCost } from '../../utils/currency-utils';
 import StoreItem from './storeItem';

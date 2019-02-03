@@ -5,7 +5,6 @@ from flask_restful import Resource
 from flask import Response
 from bs4 import BeautifulSoup
 
-
 # note see api 
 
 class CabinQuestEndPoint(Resource):

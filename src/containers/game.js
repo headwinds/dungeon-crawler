@@ -11,7 +11,7 @@ import playerInput, {
 } from '../actions/';
 
 import Cell from '../components/cell';
-import Player from '../containers/player';
+import Player from './player/player';
 
 class Grid extends Component {
 	constructor() {

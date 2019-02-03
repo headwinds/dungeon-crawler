@@ -1,135 +1,144 @@
-import { connect } from 'react-redux';
-import React, { Component } from 'react';
-import config from '../config.js';
-import Backpack from './backpack';
-import Game from './game';
-import Header from '../components/header';
-import Messages from './messages';
-import NPCStore from './npc-store/npc-store';
-import PlayerSettings from './player-settings';
-import Scoreboard from '../components/scoreboard';
-import Tips from './tips';
-import axios from 'axios';
+import { connect } from "react-redux";
+import React, { Component } from "react";
+import config from "../config.js";
+import Backpack from "./backpack";
+import Game from "./game";
+import Header from "../components/header";
+import Messages from "./messages";
+import NPCStore from "./npc-store/npc-store";
+import PlayerSettings from "./player/player-settings";
+import PaperDoll from "./player/paper-doll";
+import Scoreboard from "../components/scoreboard";
+import Tips from "./tips";
+import axios from "axios";
+import Wayfinding from "./wayfinding/wayfinding.js";
+import {twitterAuth} from "../actions/user-actions";
 
 class DungeonCrawler extends Component {
-	constructor(props) {
-		super(props);
+  constructor(props) {
+    super(props);
 
-		this.state = {
-			requiresAuthentication: (config.BACKEND === "python"),
-			authenticated: false,
-			greet: "",
-			authenticateCheckComplete: false,
-		}
-	}
+    this.state = {
+      requiresAuthentication: config.BACKEND === "python",
+      authenticated: false,
+      greet: "",
+      authenticateCheckComplete: false
+    };
+  }
 
-	componentDidMount(){
-		console.log("DungeonCrawler", this.state);
-		if (this.state.requiresAuthentication) this.handleTwitterLoginClick();
-	}
+  componentDidMount() {
+    if (this.state.requiresAuthentication) this.handleTwitterLoginClick();
+  }
 
-	handleTwitterLoginClick() {
+  componentWillReceiveProps(nextProps) {
+    //if (this.state.requiresAuthentication) this.handleTwitterLoginClick();
+    if (nextProps.authenticated !== null) {
+      this.state.authenticated = nextProps.user
+    }
+  }
 
-		console.log("handleTwitterLoginClick", this.state);
+  handleTwitterLoginClick() {
+    const self = this;
+    const {triggerTwitterAuth} = this.props;
 
-		const self = this;
+    if (document.location.port !== "3000") triggerTwitterAuth();
+  }
 
-		const url = (document.domain === "127.0.0.1") ? 'http://127.0.0.1:5000/api/twitter/auth' : 'https://' + document.domain +  '/api/twitter/auth'
-		
-		let authenticated, greet, authenticateCheckComplete;
+  render() {
+    const { grid, player } = this.props;
 
-		axios.get(url).then( response => {
-  
-			  console.log("Twitter response: ", response.data);
-			  if (response.data.screen_name) {
-				authenticated = true;
-				greet = response.data.screen_name + ", shall we begin?";
-			  }            
-			}
-		  ).catch(error => {
-  
-			console.log("Twitter error: ", error);         
-			this.errored = error
-			greet = "";
-			authenticated = false;
+    const sidebarClass =
+      config.VP_TYPE === "full" ? "sidebar_fullscreen" : "sidebar";
+    const app = config.VP_TYPE === "full" ? "app_fullscreen" : "app";
 
-		  }).finally(() => {
-				
-			authenticateCheckComplete = true;
+    const getTipWithSidebar = () => {
+      if (!config.TIPS_ALONG_BOTTOM) return <Tips />;
+      else return null;
+    };
 
-			self.setState({
-				authenticated,
-				greet,
-				authenticateCheckComplete})
-		})
-	}
-	
-	render() {
-	 
-		const {grid, player} = this.props;
+    const getTipsAtBottom = () => {
+      if (config.TIPS_ALONG_BOTTOM) return <Tips />;
+      else return null;
+    };
 
-		const sidebarClass = (config.VP_TYPE === "full") ? "sidebar_fullscreen" : "sidebar";
-		const app = (config.VP_TYPE === "full") ? "app_fullscreen" : "app";
+    const getSignin = () => {
+      // proxy in package json doesn't seem to work with this port 
+      if (document.location.port === "3000") {  
 
-		const getTipWithSidebar = () => {
-			if (!config.TIPS_ALONG_BOTTOM) return (<Tips/>)
-			else return null;
-		}
+        return (
+          <div className="signinContainer" style={{ margin: 20 }}>
+            <PaperDoll />
+          </div>
+        );
 
-		const getTipsAtBottom = () => {
-			if (config.TIPS_ALONG_BOTTOM) return (<Tips/>)
-			else return null;
-		}
+      } else {
+        if (
+          this.state.requiresAuthentication &&
+          this.state.authenticateCheckComplete &&
+          !this.state.authenticated
+        ) {
+          return (
+            <div className="signinContainer" style={{ margin: 20 }}>
+              <a
+                href="/api/twitter/auth"
+                style={{
+                  color: "white",
+                  textDecoration: "none",
+                  cursor: "pointer"
+                }}
+              >
+                Signin with Twitter
+              </a>
+            </div>
+          );
+        } else if (
+          this.state.requiresAuthentication &&
+          this.state.authenticateCheckComplete &&
+          this.state.authenticated
+        ) {
+          return (
+            <div className="signinContainer" style={{ margin: 20 }}>
+              <PaperDoll />
+            </div>
+          );
+        } else return null;
+      }
+    };
 
-		const getSignin = () => {
-			
-			if (this.state.requiresAuthentication 
-				&& this.state.authenticateCheckComplete 
-				&& !this.state.authenticated) {
-				return (
-					<div className="signinContainer" style={{margin: 20}}>
-						<a href="/api/twitter/auth" style={{color: "white", textDecoration: "none", cursor: "pointer"}}>Signin with Twitter</a>
-					</div>
-				)
-			} else if (this.state.requiresAuthentication 
-				&& this.state.authenticateCheckComplete 	
-				&& this.state.authenticated) {
-				return (
-					<div className="signinContainer" style={{margin: 20}}>
-						<p>{this.state.greet}</p>
-					</div>
-				)
-			} else return null;
-		}
+    return (
+      <div>
+        <Header level={grid.dungeonLevel} />
+        <div id={app}>
+          <Wayfinding />
+          <Game />
+          <div className={sidebarClass}>
+            {getSignin()}
+            <div className="npcStore">
+              <NPCStore />
+            </div>
+            <div className="backpack">
+              <Backpack />
+            </div>
+            <Scoreboard player={player} grid={grid} />
+            <PlayerSettings />
+            <Messages />
+            {getTipWithSidebar()}
+          </div>
+        </div>
+        {getTipsAtBottom()}
+      </div>
+    );
+  }
+}
 
-		console.log("config: ", config.BACKEND);
+const mapStateToProps = ({ ui, grid, player }) => {
+  return { ui, grid, player };
+};
 
-		return (
-			<div>
-				<Header level={grid.dungeonLevel}/>
-				<div id={app}>
-					<Game/>
-						<div className={sidebarClass}>
-							{getSignin()}
-							<div className="npcStore">
-								<NPCStore />
-							</div>
-							<div className="backpack">
-								<Backpack />
-							</div>
-							<Scoreboard player={player} grid={grid}/>
-							<PlayerSettings/>
-							<Messages/>
-							{getTipWithSidebar()}
-						</div>
-				</div>
-				{getTipsAtBottom()}
-			</div>);
+const mapDispatchToProps = (dispatch) => {
+	return {
+		triggerTwitterAuth: () => dispatch(twitterAuth())
 	};
 };
 
-const mapStateToProps = ({ ui, grid, player }) => {
-	return { ui, grid, player };
-};
-
-export default connect(mapStateToProps)(DungeonCrawler);
+export default connect(mapStateToProps,mapDispatchToProps)(DungeonCrawler);

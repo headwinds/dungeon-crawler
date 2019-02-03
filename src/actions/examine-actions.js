@@ -54,6 +54,10 @@ export function lookAround(entities) {
 								about = " Health Potion ";
 								iconClass = entity.type;
 								break;
+						default:
+								about = " Health Potion ";
+								iconClass = entity.type;
+								break;	
 					}
 					aroundMe += about;
 				}

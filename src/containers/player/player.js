@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { lookAround } from '../actions/examine';
-import { talkToNPC, interactWithNeutral } from '../actions/player';
-import { getNPCsAroundMe } from '../utils/npc-utils';
+import { lookAround } from '../../actions/examine-actions';
+import { talkToNPC, interactWithNeutral } from '../../actions/player-actions';
+import { getNPCsAroundMe } from '../../utils/npc-utils';
 //import { getNeutralsAroundMe } from '../utils/npc-utils';
 
-import Cell from '../components/cell';
+import Cell from '../../components/cell';
 
 class Player extends Component {
 	constructor() {

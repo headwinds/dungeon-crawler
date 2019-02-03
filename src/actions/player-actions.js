@@ -1,29 +1,33 @@
-import _ from 'lodash';
-import { batchActions } from 'redux-batched-actions';
-import * as t from '../constants/action-types';
-import { getCreditsAsCopper, displayCost, getPlayerCurrencyAfterBuy } from '../utils/currency-utils';
-import { npcSoldItem, npcBoughtItem } from './npc';
-import {newMessage} from './index';
-import config from '../config.js';
+import _ from "lodash";
+import { batchActions } from "redux-batched-actions";
+import * as t from "../constants/action-types";
+import {
+  getCreditsAsCopper,
+  displayCost,
+  getPlayerCurrencyAfterBuy
+} from "../utils/currency-utils";
+import { npcSoldItem, npcBoughtItem } from "./npc-actions";
+import { newMessage } from "./index";
+import config from "../config.js";
+import {api} from "../utils/http";
+import axios from "axios";
 
 export function toggleNPCStore() {
   return {
-    type: t.TOGGLE_NPC_STORE,
+    type: t.TOGGLE_NPC_STORE
   };
 }
 
 export function selectNPC(npc) {
-
   /*
   Before you can interact with an NPC, you need to select which one from those around you
   */
   return {
-    type: t.SELECT_NPC,
+    type: t.SELECT_NPC
   };
 }
 
 export function talkToNPC(npcsAroundMe) {
-
   /*
   Conversation
   when you start, a conversation the NPC Store overlay appears which:
@@ -33,12 +37,11 @@ export function talkToNPC(npcsAroundMe) {
 
   return {
     type: t.TALK_TO_NPC,
-    payload: {npcsAroundMe}
+    payload: { npcsAroundMe }
   };
 }
 
 export function interactWithNeutral(neutralsAroundMe) {
-
   /*
   Conversation
   when you start, a conversation the NPC Store overlay appears which:
@@ -48,21 +51,19 @@ export function interactWithNeutral(neutralsAroundMe) {
 
   return {
     type: t.INTERACT_WITH_NEUTRAL,
-    payload: {neutralsAroundMe}
+    payload: { neutralsAroundMe }
   };
 }
 
-
-
 export function itemTradeSuccess() {
   return {
-    type: t.PLAYER_TRADE_SUCCESS,
+    type: t.PLAYER_TRADE_SUCCESS
   };
 }
 
 export function itemTradeFail() {
   return {
-    type: t.PLAYER_TRADE_FAIL,
+    type: t.PLAYER_TRADE_FAIL
   };
 }
 
@@ -71,7 +72,7 @@ export function playerBoughtItem(inventory, currency) {
     type: t.PLAYER_BOUGHT_ITEM,
     payload: {
       inventory,
-      currency,
+      currency
     }
   };
 }
@@ -81,7 +82,7 @@ export function playerSoldItem(inventory, currency) {
     type: t.PLAYER_SOLD_ITEM,
     payload: {
       inventory,
-      currency,
+      currency
     }
   };
 }
@@ -89,22 +90,16 @@ export function playerSoldItem(inventory, currency) {
 // we could add a second tradeItems function if it was a straight swap not involving currency
 // if it's one item assume it's for cash
 export function tradeItem(item, buyer, seller) {
-
   return (dispatch, getState) => {
-
     const actions = [];
 
     // do I have room for it my inventory?
 
-     console.log("max ", config.MAX_INVENTORY_ITEMS )
-     console.log("max vs", buyer.inventory.length  )
+    console.log("max ", config.MAX_INVENTORY_ITEMS);
+    console.log("max vs", buyer.inventory.length);
 
     if (buyer.inventory.length >= config.MAX_INVENTORY_ITEMS) {
-
-      actions.push(
-        itemTradeFail(),
-        newMessage("You have no room for it!")
-      );
+      actions.push(itemTradeFail(), newMessage("You have no room for it!"));
 
       return dispatch(batchActions(actions));
     }
@@ -114,45 +109,48 @@ export function tradeItem(item, buyer, seller) {
     const itemTotalCopper = getCreditsAsCopper(item);
 
     if (myTotalCopper > itemTotalCopper) {
-
-      const newTotalCopper =  myTotalCopper - itemTotalCopper;
+      const newTotalCopper = myTotalCopper - itemTotalCopper;
       const newPlayerCurrency = getPlayerCurrencyAfterBuy(newTotalCopper);
       const newPlayerInventory = [...buyer.inventory, item];
 
       //this.props.buyItem(boughtItem, newPlayerCurrency)
       actions.push(
         npcSoldItem(seller, item), // later we could add currency to the npc - give thieves something to steal
-        playerBoughtItem(newPlayerInventory, newPlayerCurrency),
-      )
+        playerBoughtItem(newPlayerInventory, newPlayerCurrency)
+      );
 
       const { player } = getState();
 
       // 6 slots
-      const newInventory = (player.inventory.length < 6) ? [...player.inventory, item] : [...player.inventory];
-
-
+      const newInventory =
+        player.inventory.length < 6
+          ? [...player.inventory, item]
+          : [...player.inventory];
 
       actions.push(
         itemTradeSuccess(),
         newMessage(`You bought a [${item.name}].`)
       );
-
     } else {
       // can't afford it...
       //this.setState({conversation: "You can't afford it."})
       // this.
       const short = itemTotalCopper - myTotalCopper;
-      const message = `Rats! You can't afford it - you're short ${short} copper.`	// ok for now but may want to show the  gold, silver, copper brreak ddown later
+      const message = `Rats! You can't afford it - you're short ${short} copper.`; // ok for now but may want to show the  gold, silver, copper brreak ddown later
 
       //this.props.newMessage(message)
-      actions.push(
-        itemTradeFail(),
-        newMessage(message) );
-
+      actions.push(itemTradeFail(), newMessage(message));
     }
 
-
     return dispatch(batchActions(actions));
+  };
+}
 
-  }
+export function setPlayerUsername(username) {
+  return {
+    type: t.PLAYER_SET_USERNAME,
+    payload: {
+      username,
+    }
+  };
 }

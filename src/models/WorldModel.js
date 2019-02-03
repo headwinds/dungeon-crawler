@@ -1,6 +1,7 @@
 import {Record} from "immutable";
 
 const WorldModel = Record({
+  playerSet: [],
   itemSet: [],
   enemySet: [],
   neutralSet: [],
