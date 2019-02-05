@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import Pin from "./pin";
+import Actor from "./actor";
 
-class Wayfinding extends Component {
+class Actors extends Component {
   constructor() {
     super();
 
@@ -20,17 +20,17 @@ class Wayfinding extends Component {
   render() {
     const { player } = this.props;
 
-    const wayfindingStyle = {
+    const actorsStyle = {
       display: "block",
       position: "absolute",
-      zIndex: 4,
+      zIndex: 3,
       background: "transparent",
       width: "100%",
       height: "100%",
       pointerEvents: "none",
     };
 
-    return <div style={wayfindingStyle} />;
+    return <div style={actorsStyle} />;
   }
 }
 
@@ -45,4 +45,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Wayfinding);
+)(Actors);

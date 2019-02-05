@@ -12,6 +12,7 @@ import Scoreboard from "../components/scoreboard";
 import Tips from "./tips";
 import axios from "axios";
 import Wayfinding from "./wayfinding/wayfinding.js";
+import Actors from "./actors/actors.js";
 import {twitterAuth} from "../actions/user-actions";
 
 class DungeonCrawler extends Component {
@@ -110,6 +111,7 @@ class DungeonCrawler extends Component {
         <Header level={grid.dungeonLevel} />
         <div id={app}>
           <Wayfinding />
+          <Actors />
           <Game />
           <div className={sidebarClass}>
             {getSignin()}
