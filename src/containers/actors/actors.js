@@ -30,7 +30,16 @@ class Actors extends Component {
       pointerEvents: "none",
     };
 
-    return <div style={actorsStyle} />;
+    const getActors = () => {
+        return (
+            <Actor model={player} />
+        )
+    }
+
+    return (
+        <div id="actors" style={actorsStyle}>
+            {getActors()}
+        </div>)
   }
 }
 

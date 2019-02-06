@@ -18,7 +18,7 @@ class Wayfinding extends Component {
   handleItemSelected() {}
 
   render() {
-    const { player } = this.props;
+    const { player, grid } = this.props;
 
     const wayfindingStyle = {
       display: "block",
@@ -30,12 +30,18 @@ class Wayfinding extends Component {
       pointerEvents: "none",
     };
 
-    return <div style={wayfindingStyle} />;
+    const pinModel = {x: grid.playerPosition[0], y: grid.playerPosition[1]};
+
+    const getPins = () => {
+      return <Pin model={pinModel} />
+    }
+
+    return <div id="wayfinding" style={wayfindingStyle}>{getPins()}</div>;
   }
 }
 
-const mapStateToProps = ({ player }) => {
-  return { player };
+const mapStateToProps = ({ player, grid }) => {
+  return { player, grid };
 };
 
 const mapDispatchToProps = dispatch => {

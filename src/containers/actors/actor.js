@@ -33,3 +33,5 @@ class Actor extends Component {
 		);
 	}
 }
+
+export default Actor;
