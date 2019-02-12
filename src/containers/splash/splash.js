@@ -1,14 +1,12 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import Pin from "./pin";
-import Quest from "./quest";
 
-class Wayfinding extends Component {
+class Splash extends Component {
   constructor() {
     super();
 
     this.state = {
-      itemSelected: null
+
     };
   }
 
@@ -21,7 +19,7 @@ class Wayfinding extends Component {
   render() {
     const { player, grid } = this.props;
 
-    const wayfindingStyle = {
+    const splashStyle = {
       display: "block",
       position: "absolute",
       zIndex: 4,
@@ -31,13 +29,7 @@ class Wayfinding extends Component {
       pointerEvents: "none",
     };
 
-    const pinModel = {x: grid.playerPosition[0], y: grid.playerPosition[1]};
-
-    const getPins = () => {
-      return <Pin model={pinModel} />
-    }
-
-    return <div id="wayfinding" style={wayfindingStyle}>{getPins()}</div>;
+    return <div id="splash" style={splashStyle}>splash</div>;
   }
 }
 
@@ -52,4 +44,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Wayfinding);
+)(Splash);

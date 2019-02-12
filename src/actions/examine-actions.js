@@ -5,7 +5,7 @@ export function lookAround(entities) {
 	const entitiesBesideMe = [];
 	let aroundMe = '';
 	let iconClass = 'floor';
-	const npcs = [];
+	// const npcs = [];
 	entities.map(row => {
 		const closeByEntities = row.filter( entity => entity.distanceFromPlayer <= 2);
 
@@ -16,6 +16,8 @@ export function lookAround(entities) {
 		});
 
 		if (closeByEntities.length > 0) entitiesBesideMe.push(closeByEntities)
+
+		return row;
 
 	});
 // sets make unique

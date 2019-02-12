@@ -28,9 +28,21 @@ class PaperDoll extends Component {
 
 		console.log("Player: ", player.toJS());
 
+		const avatarPortrait = {display: "block",
+								background: "#333",
+								width: 80,
+								height: 80};
+
+		const avatarName = {display: "block",
+							width: 80,
+							height: 80};						
+
 		return (
-			<div className="panel">
-				{player.get("name")}
+			<div className="panel" style={{flexDirection:"row", justifyContent: "flex-start", marginBottom: 0}}>
+				<div id="portrait" style={avatarPortrait}></div>
+				<div style={{marginLeft: 10}}>
+					<div id="name" style={avatarName}>{player.get("name")}</div>
+				</div>
 			</div>
 		);
 	}

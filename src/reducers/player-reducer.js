@@ -1,15 +1,15 @@
 import * as t from '../constants/action-types';
 import config from "../config.js";
 import worldsets from '../worldsets/worldsets';
-import PlayerModel from "../models/PlayerModel";
+// import PlayerModel from "../models/PlayerModel";
 
 const gameWorldSeq = worldsets[config.OWNER];
-
 
 // Seq is a keyed object of Sets containing Records
 const playerRecord = gameWorldSeq.get("playerSet").filter( playerRecord =>  playerRecord.get("name") === config.STARTING_HERO_NAME ).first();	
 
-const initialState = new PlayerModel({name: config.STARTING_HERO_NAME});
+//const initialState = new PlayerModel({name: config.STARTING_HERO_NAME});
+const initialState = playerRecord;
 
 export default (state = initialState, { type, payload }) => {
 	const currency = state.currency;

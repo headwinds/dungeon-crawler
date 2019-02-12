@@ -4,6 +4,7 @@ import PlayerModel from "../../models/PlayerModel";
 import ItemModel from "../../models/ItemModel";
 import EnemyModel from "../../models/EnemyModel";
 import WeaponModel from "../../models/WeaponModel";
+import ShieldModel from "../../models/ShieldModel";
 import WorldModel from "../../models/WorldModel";
 
 // PLAYERS
@@ -129,7 +130,10 @@ const shieldTypes = [
   }
 ];
 
-const shieldSet = new Set([mushroomItem]);
+const shieldRecords = shieldTypes.map(typeObj => {
+  return new ShieldModel(typeObj); 
+  });
+const shieldSet = new Set(shieldRecords);
 
 // WEAPONS
 
@@ -168,11 +172,10 @@ const weaponTypes = [
   }
 ];
 
-const stickWeapon = new WeaponModel({
-  name: "stick",
-});
-
-const weaponSet = new Set([stickWeapon]);
+const weaponRecords = weaponTypes.map(typeObj => {
+  return new WeaponModel(typeObj); 
+  });
+const weaponSet = new Set(weaponRecords);
 
 const world = new WorldModel({
   playerSet,

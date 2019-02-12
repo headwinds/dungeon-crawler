@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-class Pin extends Component {
+class Quest extends Component {
 	constructor() {
 		super();
 
@@ -30,7 +30,7 @@ class Pin extends Component {
 
 		const floorTileSize = 18;
 		
-		const pinStyle = {
+		const questStyle = {
 			display: "block",
 			position: "absolute",
 			top: `${model.y * floorTileSize - 20}px`,
@@ -44,11 +44,11 @@ class Pin extends Component {
 		}
 
 		return (
-			<div id="you-are-here" style={pinStyle}>
+			<div id="quest" style={questStyle}>
 				I'm here!
 			</div>
 		);
 	}
 }
 
-export default Pin;
+export default Quest;

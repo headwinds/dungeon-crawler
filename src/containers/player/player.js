@@ -3,10 +3,10 @@ import { connect } from 'react-redux';
 
 import { lookAround } from '../../actions/examine-actions';
 import { talkToNPC, interactWithNeutral } from '../../actions/player-actions';
-import { getNPCsAroundMe } from '../../utils/npc-utils';
-//import { getNeutralsAroundMe } from '../utils/npc-utils';
+import { getEntitiesAroundMe } from '../../utils/entity-utils.js';
 
 import Cell from '../../components/cell';
+import npcTypes from '../../types/npcTypes';
 
 class Player extends Component {
 	constructor() {
@@ -38,19 +38,22 @@ class Player extends Component {
 		);
 	}
 	handleKeyPress(e) {
+
+		const {dispatchLookAround, dispatchTalkToNPC, dispatchInteractWithNeutral} = this.props;
+
 		console.log("code:",e.keyCode)
 		switch (e.keyCode) {
 			case 76:
-				this.props.lookAround(this.props.grid.entities);
+				dispatchLookAround(this.props.grid.entities);
 				break;
 			case 84:
-				const npcsAroundMe = getNPCsAroundMe(this.props.grid.entities)
-				if ( npcsAroundMe.length > 0) this.props.talkToNPC(npcsAroundMe);
+				const npcsAroundMe = getEntitiesAroundMe(this.props.grid.entities, "npc")
+				if ( npcsAroundMe.length > 0) dispatchTalkToNPC(npcsAroundMe);
 				break;
 			case 72:
 				//this.props.lookAround(this.props.grid.entities);
-				//const neutralsAroundMe = getNeutralsAroundMe(this.props.grid.entities)
-				//if ( neutralsAroundMe.length > 0) this.props.interactWithNeutral(npcsAroundMe, "harvest");
+				const neutralsAroundMe = getEntitiesAroundMe(this.props.grid.entities, "neutral")
+				if ( neutralsAroundMe.length > 0) dispatchInteractWithNeutral(neutralsAroundMe, "harvest");
 				break;
 			default:
 				return;
@@ -64,8 +67,9 @@ const mapStateToProps = ({ui, grid, player}) => {
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		lookAround: (entities) => dispatch(lookAround(entities)),
-		talkToNPC: (npcsAroundMe) => dispatch(talkToNPC(npcsAroundMe))
+		dispatchLookAround: (entities) => dispatch(lookAround(entities)),
+		dispatchTalkToNPC: (npcsAroundMe) => dispatch(talkToNPC(npcsAroundMe)),
+		dispatchInteractWithNeutral: (neutralsAroundMe, interaction) => dispatch(interactWithNeutral(neutralsAroundMe, interaction))
 	};
 };
 

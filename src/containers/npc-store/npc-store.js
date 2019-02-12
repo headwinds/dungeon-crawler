@@ -119,8 +119,10 @@ class NPCStore extends Component {
 
 		}
 
+		const npcStoreStyle = ( this.state.selectedNPC !== null ) ? {display: "block"} : {display: "none"};
+
 		return (
-			<div className="panel">
+			<div className="panel" style={npcStoreStyle}>
 			  {getPickNPC()}
 				{getStore()}
 			</div>

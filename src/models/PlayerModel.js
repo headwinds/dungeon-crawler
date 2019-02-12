@@ -1,7 +1,7 @@
 import {Record} from "immutable";
 
 const PlayerModel = Record({
-  	name: '',
+  	name: '', // player not created
 	profession:'',
 	level:1,
 	experience:0,

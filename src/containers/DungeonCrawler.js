@@ -12,6 +12,7 @@ import Scoreboard from "../components/scoreboard";
 import Tips from "./tips";
 import axios from "axios";
 import Wayfinding from "./wayfinding/wayfinding.js";
+import Splash from "./splash/splash.js";
 import Actors from "./actors/actors.js";
 import {twitterAuth} from "../actions/user-actions";
 
@@ -67,7 +68,7 @@ class DungeonCrawler extends Component {
       if (document.location.port === "3000") {  
 
         return (
-          <div className="signinContainer" style={{ margin: 20 }}>
+          <div className="signinContainer" style={{ margin: 0 }}>
             <PaperDoll />
           </div>
         );
@@ -79,7 +80,7 @@ class DungeonCrawler extends Component {
           !this.state.authenticated
         ) {
           return (
-            <div className="signinContainer" style={{ margin: 20 }}>
+            <div className="signinContainer" style={{ margin: 0 }}>
               <a
                 href="/api/twitter/auth"
                 style={{
@@ -110,6 +111,7 @@ class DungeonCrawler extends Component {
       <div>
         <Header level={grid.dungeonLevel} />
         <div id={app}>
+          <Splash />
           <Wayfinding />
           <Actors />
           <Game />

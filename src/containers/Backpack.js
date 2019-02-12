@@ -27,9 +27,16 @@ class Backpack extends Component {
 
 	render() {
 		const { player } = this.props;
-    console.log("Backpack render: ", player.inventory);
+		console.log("Backpack render: ", player.inventory);
+		
+		const backpackStyle = {background: "transparent", 
+								margin: 0,
+							    display: "flex",
+    							flexDirection: "row",
+    							justifyContent: "center"}
+
 		return (
-			<div className="panel">
+			<div className="panel" style={backpackStyle}>
 				<Inventory items={player.inventory} handleItemSelected={this.handleItemSelected} />
 			</div>
 		);

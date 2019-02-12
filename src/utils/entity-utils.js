@@ -1,14 +1,12 @@
-export function getNPCsAroundMe(entities) {
+export function getEntitiesAroundMe(entities, type) {
 
 	const entitiesBesideMe = [];
-	let aroundMe = '';
-	let iconClass = 'floor';
-	const npcs = [];
+
 	entities.map(row => {
 		const closeByEntities = row.filter( entity => entity.distanceFromPlayer <= 2);
 
 		row.filter( entity => {
-			if (entity.type === "npc") {
+			if (entity.type === type) {
 
 			}
 		});
@@ -18,16 +16,16 @@ export function getNPCsAroundMe(entities) {
 	});
 
 	if (entitiesBesideMe.length > 0) {
-		const npcsAroundMe = [];
+		const entitiesAroundMe = [];
 		entitiesBesideMe.map(entities => {
-			const group = entities.filter(entity => entity.type === "npc");
+			const group = entities.filter(entity => entity.type === type);
 			if (group && group.length > 0) {
-				group.map( npc => npcsAroundMe.push(npc) )
+				group.map( type => entitiesAroundMe.push(type) )
 			}
 		});
-		return npcsAroundMe;
+		return entitiesAroundMe;
 	} else {
-		return null; // no one is beside me
+		return null; // nothing is beside me
 	}
 
 }
