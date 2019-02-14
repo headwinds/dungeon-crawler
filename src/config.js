@@ -28,6 +28,8 @@ const headwinds = {
   BACKEND: "python",
   WORLDSET: "cabinquest", 
   STARTING_HERO_NAME: "Winnie",
+  STARTING_WEAPON_NAME: "Fist",
+  STARTING_SHIELD_NAME: "Dress",
   API_BASE_URL: "api/shadowhunters",
 }
 
@@ -52,7 +54,9 @@ const peted = {
   MAX_INVENTORY_ITEMS: 6,
   BACKEND: "none",
   WORLDSET: "doom", 
-  STARTING_HERO_NAME: "Doomguy"
+  STARTING_HERO_NAME: "Doomguy",
+  STARTING_WEAPON_NAME: "Stick",
+  STARTING_SHIELD_NAME: "Pants",
 }
 
 const config = headwinds;

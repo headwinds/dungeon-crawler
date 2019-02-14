@@ -26,8 +26,6 @@ class Pin extends Component {
 	render() {
 		const { model } = this.props;
 
-		console.log("pin: ", model);
-
 		const floorTileSize = 18;
 		
 		const pinStyle = {

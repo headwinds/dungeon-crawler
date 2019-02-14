@@ -2,6 +2,15 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import Item from "./inventory-item";
 
+/*
+		<Score
+				iconClass="weapon"
+				title="Weapon"
+				value={`${player.weapon.name} (+${player.weapon.damage})`}
+				/>
+
+*/
+
 class Inventory extends Component {
   constructor() {
     super();
@@ -36,6 +45,8 @@ class Inventory extends Component {
   render() {
     const { items } = this.props;
 
+    console.log("inventory items: ", items)
+
     const inventorySlots = [0, 1, 2, 3];
 
     const list = inventorySlots.map(idx => {
@@ -52,7 +63,7 @@ class Inventory extends Component {
 
       if (item) {
         return (
-          <div style={slotStyle}>
+          <div style={slotStyle} key={idx}>
             <Item
               key={idx}
               item={item}
@@ -63,7 +74,7 @@ class Inventory extends Component {
           </div>
         );
       } else {
-        return <div style={slotStyle} />;
+        return <div style={slotStyle} key={idx} />;
       }
 
     });

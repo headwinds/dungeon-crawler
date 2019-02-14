@@ -6,7 +6,7 @@ import EnemyModel from "../../models/EnemyModel";
 import WeaponModel from "../../models/WeaponModel";
 import WorldModel from "../../models/WorldModel";
 
-import commonSeq from "../common/commonSeq";
+import commonWorld from "../common/commonWorld";
 
 // PLAYERS
 
@@ -15,9 +15,15 @@ const defaultPlayer = new PlayerModel({
   });
   
 const playerSet = new Set([defaultPlayer]);
-const commonObj = commonSeq.toJS();
-commonObj["playerSet"] = playerSet;
 
-const cabinQuestSeq = new Seq(commonObj);
+const cabinQuestWorld = new WorldModel({
+  playerSet,
+  itemSet: commonWorld.get("itemSet"),
+  enemySet: commonWorld.get("enemySet"),
+  neutralSet: commonWorld.get("neutralSet"),
+  npcSet: commonWorld.get("npcSet"),
+  shieldSet: commonWorld.get("shieldSet"),
+  weaponSet: commonWorld.get("weaponSet")
+});
 
-export default cabinQuestSeq;
+export default cabinQuestWorld;

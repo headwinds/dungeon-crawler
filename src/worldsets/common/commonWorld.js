@@ -94,6 +94,16 @@ const shieldTypes = [
     type: "shield"
   },
   {
+    name: "Dress",
+    protection: 1,
+    type: "shield"
+  },
+  {
+    name: "Pants",
+    protection: 1,
+    type: "shield"
+  },
+  {
     name: "Bracers",
     protection: 5,
     type: "shield"
@@ -139,7 +149,11 @@ const shieldSet = new Set(shieldRecords);
 
 const weaponTypes = [
   {
-    name: "Big Stick",
+    name: "Fist",
+    damage: 1
+  },
+  {
+    name: "Stick",
     damage: 10
   },
   {
@@ -172,12 +186,10 @@ const weaponTypes = [
   }
 ];
 
-const weaponRecords = weaponTypes.map(typeObj => {
-  return new WeaponModel(typeObj); 
-  });
+const weaponRecords = weaponTypes.map(typeObj => ( new WeaponModel(typeObj) ));
 const weaponSet = new Set(weaponRecords);
 
-const world = new WorldModel({
+const commonWorld = new WorldModel({
   playerSet,
   itemSet,
   enemySet,
@@ -187,6 +199,4 @@ const world = new WorldModel({
   weaponSet
 });
 
-const commonSeq = new Seq(world.toJS());
-
-export default commonSeq;
+export default commonWorld;

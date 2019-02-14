@@ -1,15 +1,19 @@
 import * as t from '../constants/action-types';
 import config from "../config.js";
 import worldsets from '../worldsets/worldsets';
-// import PlayerModel from "../models/PlayerModel";
 
 const gameWorldSeq = worldsets[config.OWNER];
 
 // Seq is a keyed object of Sets containing Records
 const playerRecord = gameWorldSeq.get("playerSet").filter( playerRecord =>  playerRecord.get("name") === config.STARTING_HERO_NAME ).first();	
 
-//const initialState = new PlayerModel({name: config.STARTING_HERO_NAME});
-const initialState = playerRecord;
+// set default player inventory based on worldset
+const defaultWeapon = gameWorldSeq.get("weaponSet").filter( record =>  record.get("name") === config.STARTING_WEAPON_NAME ).first();	 
+const defaultShield = gameWorldSeq.get("shieldSet").filter( record =>  record.get("name") === config.STARTING_SHIELD_NAME ).first();	  
+const defaultInventory = [defaultWeapon, defaultShield];  
+const newPlayerRecord = playerRecord.set("inventory", defaultInventory);
+
+const initialState = newPlayerRecord;
 
 export default (state = initialState, { type, payload }) => {
 	const currency = state.currency;

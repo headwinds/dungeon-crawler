@@ -1,9 +1,9 @@
-import cabinQuestSeq from './cabinquest/cabinQuestSeq';
-import doomSeq from './doom/doomSeq';
+import cabinQuestWorld from './cabinquest/cabinQuestWorld';
+import doomWorld from './doom/doomWorld';
 
 const worldsets = {
-    "headwinds": cabinQuestSeq,
-    "peted": doomSeq
+    "headwinds": cabinQuestWorld,
+    "peted": doomWorld
 }
 
 export default worldsets;
